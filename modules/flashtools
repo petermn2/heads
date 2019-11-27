@@ -22,6 +22,7 @@ flashtools_output := \
 	poke \
 	cbfs \
 	uefi \
+	io386 \
 
 flashtools_libraries := \
 
