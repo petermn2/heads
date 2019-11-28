@@ -1,0 +1,109 @@
+From 93a9a47eb21be12317dc40ad62a2c079a0c986df Mon Sep 17 00:00:00 2001
+From: Martin Kepplinger <martin.kepplinger@puri.sm>
+Date: Thu, 28 Nov 2019 15:48:12 +0100
+Subject: [PATCH] mb/lenovo/x230: Add support for VBOOT
+
+Enable VBOOT support on the Lenovo X230 using RW_MAIN_A + RW_MAIN_B partition,
+allowing the use of tianocore payload in both RW_MAIN_A, RW_MAIN_B and WP_RO.
+
+* Add VBNV section to cmos.layout
+* Add FMAP for VBOOT
+* Select Kconfigs for VBOOT
+* Enable VBOOT_SLOTS_RW_AB by default
+
+Change-Id: I45a20adae0bc0de3192a88b35cd4ea6bd1c75d2c
+Signed-off-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+---
+ src/mainboard/lenovo/x230/Kconfig        | 19 +++++++++++++
+ src/mainboard/lenovo/x230/cmos.layout    |  3 +++
+ src/mainboard/lenovo/x230/vboot-rwab.fmd | 34 ++++++++++++++++++++++++
+ 3 files changed, 56 insertions(+)
+ create mode 100644 src/mainboard/lenovo/x230/vboot-rwab.fmd
+
+diff --git a/src/mainboard/lenovo/x230/Kconfig b/src/mainboard/lenovo/x230/Kconfig
+index a043efcd70..849556ab47 100644
+--- a/src/mainboard/lenovo/x230/Kconfig
++++ b/src/mainboard/lenovo/x230/Kconfig
+@@ -27,6 +27,25 @@ config BOARD_SPECIFIC_OPTIONS
+ 	# Workaround for EC/KBC IRQ1.
+ 	select SERIRQ_CONTINUOUS_MODE
+ 
++config VBOOT
++	select VBOOT_VBNV_CMOS
++	select GBB_FLAG_DISABLE_LID_SHUTDOWN
++	select GBB_FLAG_DISABLE_PD_SOFTWARE_SYNC
++	select GBB_FLAG_DISABLE_EC_SOFTWARE_SYNC
++	select GBB_FLAG_DISABLE_FWMP
++	select HAS_RECOVERY_MRC_CACHE
++
++config VBOOT_SLOTS_RW_AB
++	default y
++
++config VBOOT_VBNV_OFFSET
++	hex
++	default 0x2a
++
++config FMDFILE
++	string
++	default "src/mainboard/$(CONFIG_MAINBOARD_DIR)/vboot-rwab.fmd" if VBOOT
++
+ config MAINBOARD_DIR
+ 	string
+ 	default lenovo/x230
+diff --git a/src/mainboard/lenovo/x230/cmos.layout b/src/mainboard/lenovo/x230/cmos.layout
+index 27197fb4b8..99034009a4 100644
+--- a/src/mainboard/lenovo/x230/cmos.layout
++++ b/src/mainboard/lenovo/x230/cmos.layout
+@@ -80,6 +80,9 @@ entries
+ 
+ 440          8       h       0        volume
+ 
++# VBOOT
++448          128     r       0        vbnv
++
+ # SandyBridge MRC Scrambler Seed values
+ 896         32        r       0        mrc_scrambler_seed
+ 928         32        r       0        mrc_scrambler_seed_s3
+diff --git a/src/mainboard/lenovo/x230/vboot-rwab.fmd b/src/mainboard/lenovo/x230/vboot-rwab.fmd
+new file mode 100644
+index 0000000000..f189b479e3
+--- /dev/null
++++ b/src/mainboard/lenovo/x230/vboot-rwab.fmd
+@@ -0,0 +1,34 @@
++FLASH@0xff400000 0xc00000 {
++	SI_ALL@0x0 0x500000 {
++		SI_DESC@0x0 0x1000
++		SI_GBE@0x1000 0x2000
++		SI_ME@0x3000 0x4ed000
++	}
++	SI_BIOS@0x500000 0x700000 {
++		RW_SECTION_A 0x280000 {
++			VBLOCK_A 0x10000
++			FW_MAIN_A(CBFS)
++			RW_FWID_A 0x40
++		}
++		RW_SECTION_B 0x280000 {
++			VBLOCK_B 0x10000
++			FW_MAIN_B(CBFS)
++			RW_FWID_B 0x40
++		}
++		UNIFIED_MRC_CACHE@0x500000 0x20000 {
++			RECOVERY_MRC_CACHE@0x0 0x10000
++			RW_MRC_CACHE@0x10000 0x10000
++		}
++		RW_VPD(PRESERVE) 0x1000
++		SMMSTORE(PRESERVE)@0x521000 0x40000
++
++		WP_RO {
++			FMAP 0x800
++			RO_FRID 0x40
++			RO_PADDING 0x7c0
++			RO_VPD(PRESERVE) 0x1000
++			GBB 0x1e000
++			COREBOOT(CBFS)
++		}
++	}
++}
+-- 
+2.20.1
+
