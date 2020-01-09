@@ -129,7 +129,7 @@ clean_boot_check()
 }
 
 # enable USB to load modules for external kb
-enable_usb
+#enable_usb
 
 if detect_boot_device ; then
   # /boot device with installed OS found
