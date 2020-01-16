@@ -112,7 +112,6 @@ tpm sealfile2 \
 	-ix 2 X \
 	-ix 3 X \
 	-ix 4 0000000000000000000000000000000000000000 \
-	-ix 5 $pcr_5 \
 	-ix 6 $luks_pcr \
 	-ix 7 X \
 || die "Unable to seal secret"
