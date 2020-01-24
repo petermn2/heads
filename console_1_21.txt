@@ -1,0 +1,1966 @@
+er@dev-coreboot-deb9:~$ cd dev/heads/
+user@dev-coreboot-deb9:~/dev/heads$ ls
+bin    boards  config   crossgcc  initrd   Makefile  packages  README.md
+blobs  build   COPYING  FAQ.md    install  modules   patches
+user@dev-coreboot-deb9:~/dev/heads$ git status
+On branch Reordering_gui-init
+Your branch is up-to-date with 'origin/Reordering_gui-init'.
+nothing to commit, working tree clean
+user@dev-coreboot-deb9:~/dev/heads$ git status
+On branch Reordering_gui-init
+Your branch is up-to-date with 'origin/Reordering_gui-init'.
+nothing to commit, working tree clean
+user@dev-coreboot-deb9:~/dev/heads$ 8MfNRGBQNyR88DBXjhvn6J4ksHBcOAhZs4xoFsoTu0bRhvq7St948/qqCFSKU5TD^C
+user@dev-coreboot-deb9:~/dev/heads$ git clone https://github.com/petermn2/heads -b x230_me_shrinked_and_test_wp^C
+user@dev-coreboot-deb9:~/dev/heads$ git
+usage: git [--version] [--help] [-C <path>] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+These are common Git commands used in various situations:
+
+start a working area (see also: git help tutorial)
+   clone      Clone a repository into a new directory
+   init       Create an empty Git repository or reinitialize an existing one
+
+work on the current change (see also: git help everyday)
+   add        Add file contents to the index
+   mv         Move or rename a file, a directory, or a symlink
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+
+examine the history and state (see also: git help revisions)
+   bisect     Use binary search to find the commit that introduced a bug
+   grep       Print lines matching a pattern
+   log        Show commit logs
+   show       Show various types of objects
+   status     Show the working tree status
+
+grow, mark and tweak your common history
+   branch     List, create, or delete branches
+   checkout   Switch branches or restore working tree files
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   merge      Join two or more development histories together
+   rebase     Reapply commits on top of another base tip
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+collaborate (see also: git help workflows)
+   fetch      Download objects and refs from another repository
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+user@dev-coreboot-deb9:~/dev/heads$ git fetch upstream
+remote: Enumerating objects: 100, done.
+remote: Counting objects: 100% (100/100), done.
+remote: Total 216 (delta 100), reused 100 (delta 100), pack-reused 116
+Receiving objects: 100% (216/216), 79.37 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (130/130), completed with 48 local objects.
+From https://github.com/osresearch/heads
+ * [new branch]      ci-fix                -> upstream/ci-fix
+ * [new branch]      coreboot-defconfig    -> upstream/coreboot-defconfig
+ * [new branch]      debug-linux           -> upstream/debug-linux
+ * [new branch]      gpg2                  -> upstream/gpg2
+ * [new branch]      hpe3100               -> upstream/hpe3100
+ * [new branch]      kvmtool               -> upstream/kvmtool
+ * [new branch]      libksba-reproducibile -> upstream/libksba-reproducibile
+ * [new branch]      linux-4.14-update     -> upstream/linux-4.14-update
+ * [new branch]      lvm-segfault          -> upstream/lvm-segfault
+ * [new branch]      make-4.2.1            -> upstream/make-4.2.1
+ * [new branch]      master                -> upstream/master
+ * [new branch]      musl-cross-make       -> upstream/musl-cross-make
+ * [new branch]      musl-cross-pin        -> upstream/musl-cross-pin
+ * [new branch]      parallel-build        -> upstream/parallel-build
+ * [new branch]      patch-failure-pr      -> upstream/patch-failure-pr
+ * [new branch]      supermicro-x11ssh     -> upstream/supermicro-x11ssh
+ * [new branch]      tiny                  -> upstream/tiny
+ * [new branch]      tlaurion-patch-1      -> upstream/tlaurion-patch-1
+ * [new branch]      zfs                   -> upstream/zfs
+user@dev-coreboot-deb9:~/dev/heads$ git merge upstream/master
+Removing patches/kexec-2.0.16.patch
+Removing modules/musl
+Merge made by the 'recursive' strategy.
+ .circleci/config.yml                               |  85 ++--
+ Makefile                                           |  14 +-
+ blobs/dev.cpio                                     | Bin 508 -> 1024 bytes
+ config/coreboot-kgpe-d16.config                    |   1 +
+ config/coreboot-librem13v2.config                  |   1 +
+ config/coreboot-librem13v4.config                  |   1 +
+ config/coreboot-librem15v3.config                  |   1 +
+ config/coreboot-librem15v4.config                  |   1 +
+ config/coreboot-qemu.config                        |   1 +
+ config/coreboot-x220.config                        |   1 +
+ config/coreboot-x230-flash.config                  |   1 +
+ config/coreboot-x230.config                        |   1 +
+ initrd/etc/distro/keys/fedora.key                  | 360 +++++++--------
+ initrd/etc/distro/keys/tails.key                   | 186 ++++----
+ modules/coreboot                                   |  45 +-
+ modules/kexec                                      |   4 +-
+ modules/libgcrypt                                  |   3 +-
+ modules/lvm2                                       |   2 +-
+ modules/msrtools                                   |   2 +-
+ modules/musl                                       |  41 --
+ modules/musl-cross                                 |  55 ++-
+ modules/tpmtotp                                    |   2 +-
+ .../0010-cross-compiler-support.patch              |  27 ++
+ patches/cryptsetup-1.7.3.patch                     | 512 ++++++++++++++++++++-
+ patches/kexec-2.0.16.patch                         |  89 ----
+ patches/kexec-2.0.20.patch                         |  76 +++
+ patches/libassuan-2.5.1.patch                      | 176 +++++++
+ patches/libgcrypt-1.8.3.patch                      | 176 +++++++
+ patches/libksba-1.3.5.patch                        | 200 ++++++++
+ patches/lvm2-2.02.168.patch                        |  50 +-
+ 30 files changed, 1562 insertions(+), 552 deletions(-)
+ delete mode 100644 modules/musl
+ create mode 100644 patches/coreboot-4.8.1/0010-cross-compiler-support.patch
+ delete mode 100644 patches/kexec-2.0.16.patch
+ create mode 100644 patches/kexec-2.0.20.patch
+ create mode 100644 patches/libassuan-2.5.1.patch
+ create mode 100644 patches/libgcrypt-1.8.3.patch
+ create mode 100644 patches/libksba-1.3.5.patch
+user@dev-coreboot-deb9:~/dev/heads$ git status
+On branch Reordering_gui-init
+Your branch is ahead of 'origin/Reordering_gui-init' by 19 commits.
+  (use "git push" to publish your local commits)
+nothing to commit, working tree clean
+user@dev-coreboot-deb9:~/dev/heads$ make config
+ Wrong make detected: 4.1
+make: Nothing to be done for 'config'.
+user@dev-coreboot-deb9:~/dev/heads$ make nconfig
+ Wrong make detected: 4.1
+make: *** No rule to make target 'nconfig'.  Stop.
+user@dev-coreboot-deb9:~/dev/heads$ make menuconfig
+ Wrong make detected: 4.1
+make: *** No rule to make target 'menuconfig'.  Stop.
+user@dev-coreboot-deb9:~/dev/heads$ cd build/coreboot-4.8.1/
+user@dev-coreboot-deb9:~/dev/heads/build/coreboot-4.8.1$ ls
+3rdparty  Documentation  Makefile      README         util
+configs   gnat.adc       Makefile.inc  src            x230
+COPYING   MAINTAINERS    payloads      toolchain.inc
+user@dev-coreboot-deb9:~/dev/heads/build/coreboot-4.8.1$ make menuconfigIn file included from /home/user/dev/heads/build/coreboot-4.8.1/util/kconfig/mconf.c:23:0:
+/home/user/dev/heads/build/coreboot-4.8.1/util/kconfig/lxdialog/dialog.h:38:20: fatal error: curses.h: No such file or directory
+ #include CURSES_LOC
+                    ^
+compilation terminated.
+/home/user/dev/heads/build/coreboot-4.8.1/util/kconfig/Makefile:349: recipe for target 'build/util/kconfig/mconf.o' failed
+make: *** [build/util/kconfig/mconf.o] Error 1
+user@dev-coreboot-deb9:~/dev/heads/build/coreboot-4.8.1$ cd ../../
+user@dev-coreboot-deb9:~/dev/heads$ grep -Inr .*layout.txt *
+blobs/x220/extract.sh:58:$IFDTOOL -n "$BLOBDIR/layout.txt" $bioscopy
+build/linux-4.14.62/Documentation/frv/features.txt:59:     See mmu-layout.txt in this directory for a description of the normal linux
+build/linux-4.14.62/Documentation/frv/kernel-ABI.txt:104:	SCR0		MMU	See mmu-layout.txt.
+build/linux-4.14.62/Documentation/frv/kernel-ABI.txt:105:	SCR1		MMU	See mmu-layout.txt.
+build/linux-4.14.62/Documentation/frv/kernel-ABI.txt:110:	DAMR/IAMR	MMU	See mmu-layout.txt.
+build/linux-4.14.62/Documentation/frv/README.txt:32: (*) mmu-layout.txt
+build/linux-4.14.62/Documentation/frv/README.txt:41:     MMU state on the FR451. See mmu-layout.txt for more information.
+build/linux-4.14.62/arch/frv/include/asm/mem-layout.h:49:/* see Documentation/frv/mmu-layout.txt */
+build/linux-4.14.62/arch/frv/include/asm/highmem.h:7: * See Documentation/frv/mmu-layout.txt for more information.
+build/linux-4.14.62/arch/frv/include/asm/pgtable.h:91: * [see Documentation/frv/mmu-layout.txt]
+user@dev-coreboot-deb9:~/dev/heads$ make help
+ Wrong make detected: 4.1
+make: *** No rule to make target 'help'.  Stop.
+user@dev-coreboot-deb9:~/dev/heads$ make v=1 BOARD=x230^C
+user@dev-coreboot-deb9:~/dev/heads$ make --help
+Usage: make [options] [target] ...
+Options:
+  -b, -m                      Ignored for compatibility.
+  -B, --always-make           Unconditionally make all targets.
+  -C DIRECTORY, --directory=DIRECTORY
+                              Change to DIRECTORY before doing anything.
+  -d                          Print lots of debugging information.
+  --debug[=FLAGS]             Print various types of debugging information.
+  -e, --environment-overrides
+                              Environment variables override makefiles.
+  --eval=STRING               Evaluate STRING as a makefile statement.
+  -f FILE, --file=FILE, --makefile=FILE
+                              Read FILE as a makefile.
+  -h, --help                  Print this message and exit.
+  -i, --ignore-errors         Ignore errors from recipes.
+  -I DIRECTORY, --include-dir=DIRECTORY
+                              Search DIRECTORY for included makefiles.
+  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no arg.
+  -k, --keep-going            Keep going when some targets can't be made.
+  -l [N], --load-average[=N], --max-load[=N]
+                              Don't start multiple jobs unless load is below N.
+  -L, --check-symlink-times   Use the latest mtime between symlinks and target.
+  -n, --just-print, --dry-run, --recon
+                              Don't actually run any recipe; just print them.
+  -o FILE, --old-file=FILE, --assume-old=FILE
+                              Consider FILE to be very old and don't remake it.
+  -O[TYPE], --output-sync[=TYPE]
+                              Synchronize output of parallel jobs by TYPE.
+  -p, --print-data-base       Print make's internal database.
+  -q, --question              Run no recipe; exit status says if up to date.
+  -r, --no-builtin-rules      Disable the built-in implicit rules.
+  -R, --no-builtin-variables  Disable the built-in variable settings.
+  -s, --silent, --quiet       Don't echo recipes.
+  -S, --no-keep-going, --stop
+                              Turns off -k.
+  -t, --touch                 Touch targets instead of remaking them.
+  --trace                     Print tracing information.
+  -v, --version               Print the version number of make and exit.
+  -w, --print-directory       Print the current directory.
+  --no-print-directory        Turn off -w, even if it was turned on implicitly.
+  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE
+                              Consider FILE to be infinitely new.
+  --warn-undefined-variables  Warn when an undefined variable is referenced.
+
+This program built for x86_64-pc-linux-gnu
+Report bugs to <bug-make@gnu.org>
+user@dev-coreboot-deb9:~/dev/heads$ make mostlyclean
+ Wrong make detected: 4.1
+make: *** No rule to make target 'mostlyclean'.  Stop.
+user@dev-coreboot-deb9:~/dev/heads$ make mostly-clean
+ Wrong make detected: 4.1
+make: *** No rule to make target 'mostly-clean'.  Stop.
+user@dev-coreboot-deb9:~/dev/heads$ make real.clean
+ Wrong make detected: 4.1
+LANG=C MAKE=/home/user/dev/heads/build/make-4.2.1/make /home/user/dev/heads/build/make-4.2.1/make real.clean
+make[1]: Entering directory '/home/user/dev/heads'
+for dir in \
+	qemu-coreboot dropbear-2016.74 slang-2.3.1a flashrom-1.0 kexec-tools-2.0.20 pinentry-1.1.0 libgcrypt-1.8.3 popt-1.16 coreboot-4.8.1/qemu-coreboot coreboot-4.8.1/3rdparty/blobs cryptsetup-1.7.3 mbedtls-2.4.2 npth-1.6 qrencode-3.4.4 busybox-1.28.0 pciutils-3.5.4 libksba-1.3.5 libassuan-2.5.1 libusb-1.0.21 linux-4.14.62/linux-qemu gnupg-2.2.10 flashtools-0.0.1 tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a msrtools-572ef8a2b873eda15a322daa48861140a078b92c newt-0.52.20 libgpg-error-1.32 libusb-compat-0.1.5 lvm2.2.02.168 util-linux-2.29.2 zlib-1.2.11 \
+	 \
+; do \
+	if [ ! -z "$dir" ]; then \
+		rm -rf "build/$dir"; \
+	fi; \
+done
+cd install && rm -rf -- *
+make[1]: Leaving directory '/home/user/dev/heads'
+user@dev-coreboot-deb9:~/dev/heads$ make v=1 BOARD=x230
+ Wrong make detected: 4.1
+LANG=C MAKE=/home/user/dev/heads/build/make-4.2.1/make /home/user/dev/heads/build/make-4.2.1/make  all
+make[1]: Entering directory '/home/user/dev/heads'
+mkdir -p "/home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/"
+tar -xf "/home/user/dev/heads/packages/coreboot-blobs-4.8.1.tar.xz" --strip 3 -C "/home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/"
+if [ -r patches/coreboot-blobs-4.8.1.patch ]; then ( cd /home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/ ; patch -p1 ) < patches/coreboot-blobs-4.8.1.patch || exit 1 ; fi
+if [ -d patches/coreboot-blobs-4.8.1 ] && [ -r patches/coreboot-blobs-4.8.1 ] ; then for patch in patches/coreboot-blobs-4.8.1/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 20:38:30-05:00 CONFIG coreboot-blobs
+2020-01-21 20:38:30-05:00 MAKE coreboot-blobs
+2020-01-21 20:38:30-05:00 DONE coreboot-blobs
+/home/user/dev/heads/build/make-4.2.1/make -C "/home/user/dev/heads/build/coreboot-4.8.1" CPUS=`nproc` iasl
+make[2]: Entering directory '/home/user/dev/heads/build/coreboot-4.8.1'
+Welcome to the coreboot cross toolchain builder v1.52 (June 11th, 2018)
+
+Building toolchain using 8 thread(s).
+
+Downloading and verifing tarballs ...
+ * acpica-unix2-20180531.tar.gz (cached)... hash verified ("17717140438d506533b4a56e34350749d7b84d6c")
+Downloaded tarballs ... ok
+Unpacking and patching ...
+ * acpica-unix2-20180531.tar.gz
+   o acpica-unix2-20180531_iasl.patch
+Unpacked and patched ... ok
+Building packages ...
+Skipping IASL v20180531 for host as it is already built
+Packages built ... ok
+Copied EDK2 tools template ... ok
+Cleaning up temporary files... ok
+
+You can now run IASL ACPI compiler from /home/user/dev/heads/build/coreboot-4.8.1/util/crossgcc/xgcc.
+make[2]: Leaving directory '/home/user/dev/heads/build/coreboot-4.8.1'
+2020-01-21 20:38:31-05:00 CONFIG coreboot
+2020-01-21 20:38:31-05:00 WGET https://github.com/richfelker/musl-cross-make/archive/38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz
+--2020-01-21 20:38:31--  https://github.com/richfelker/musl-cross-make/archive/38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz
+Resolving github.com (github.com)... 140.82.114.4
+Connecting to github.com (github.com)|140.82.114.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://codeload.github.com/richfelker/musl-cross-make/tar.gz/38e52db8358c043ae82b346a2e6e66bc86a53bc1 [following]
+--2020-01-21 20:38:31--  https://codeload.github.com/richfelker/musl-cross-make/tar.gz/38e52db8358c043ae82b346a2e6e66bc86a53bc1
+Resolving codeload.github.com (codeload.github.com)... 192.30.253.121
+Connecting to codeload.github.com (codeload.github.com)|192.30.253.121|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz.tmp'
+
+/home/user/dev/heads/packages/m     [ <=>                                                   ] 138.81K   763KB/s    in 0.2s    
+
+2020-01-21 20:38:32 (763 KB/s) - '/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz.tmp' saved [142143]
+
+echo "b4b85d6d3ddab0f2b8650a53e775673f8c346fa2fb07d652a9880bd206ade100  /home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/"
+tar -xf "/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz" --strip 1 -C "/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/"
+if [ -r patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.patch ]; then ( cd /home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/ ; patch -p1 ) < patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.patch || exit 1 ; fi
+if [ -d patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1 ] && [ -r patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1 ] ; then for patch in patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 20:38:32-05:00 CONFIG musl-cross
+/home/user/dev/heads/build/make-4.2.1/make \
+	-C "/home/user/dev/heads/build/linux-4.14.62" \
+	INSTALL_HDR_PATH="/home/user/dev/heads/install" \
+	O="linux-4.14.62/linux-x230" \
+	KCONFIG_CONFIG="/home/user/dev/heads/config/linux-x230.config" \
+	headers_install
+make[2]: Entering directory '/home/user/dev/heads/build/linux-4.14.62'
+make[3]: Entering directory '/home/user/dev/heads/build/linux-4.14.62/linux-4.14.62/linux-x230'
+  CHK     include/generated/uapi/linux/version.h
+  INSTALL include/asm-generic (36 files)
+  INSTALL include/drm (25 files)
+  INSTALL include/linux (486 files)
+  INSTALL include/linux/android (1 file)
+  INSTALL include/linux/byteorder (2 files)
+  INSTALL include/linux/caif (2 files)
+  INSTALL include/linux/can (6 files)
+  INSTALL include/linux/cifs (1 file)
+  INSTALL include/linux/dvb (8 files)
+  INSTALL include/linux/genwqe (1 file)
+  INSTALL include/linux/hdlc (1 file)
+  INSTALL include/linux/hsi (2 files)
+  INSTALL include/linux/iio (2 files)
+  INSTALL include/linux/isdn (1 file)
+  INSTALL include/linux/mmc (1 file)
+  INSTALL include/linux/netfilter (87 files)
+  INSTALL include/linux/netfilter/ipset (4 files)
+  INSTALL include/linux/netfilter_arp (2 files)
+  INSTALL include/linux/netfilter_bridge (17 files)
+  INSTALL include/linux/netfilter_ipv4 (9 files)
+  INSTALL include/linux/netfilter_ipv6 (12 files)
+  INSTALL include/linux/nfsd (5 files)
+  INSTALL include/linux/raid (2 files)
+  INSTALL include/linux/sched (1 file)
+  INSTALL include/linux/spi (1 file)
+  INSTALL include/linux/sunrpc (1 file)
+  INSTALL include/linux/tc_act (15 files)
+  INSTALL include/linux/tc_ematch (4 files)
+  INSTALL include/linux/usb (12 files)
+  INSTALL include/linux/wimax (1 file)
+  INSTALL include/misc (1 file)
+  INSTALL include/mtd (5 files)
+  INSTALL include/rdma (20 files)
+  INSTALL include/rdma/hfi (2 files)
+  INSTALL include/scsi (4 files)
+  INSTALL include/scsi/fc (4 files)
+  INSTALL include/sound (15 files)
+  INSTALL include/video (3 files)
+  INSTALL include/xen (4 files)
+  INSTALL include/asm (62 files)
+make[3]: Leaving directory '/home/user/dev/heads/build/linux-4.14.62/linux-4.14.62/linux-x230'
+make[2]: Leaving directory '/home/user/dev/heads/build/linux-4.14.62'
+2020-01-21 20:38:36-05:00 MAKE musl-cross
+tail /home/user/dev/heads/build/log/musl-cross.log
+-----
+         You might want to install the Texinfo package:
+         <http://www.gnu.org/software/texinfo/>
+         The spurious makeinfo call might also be the consequence of
+         using a buggy 'make' (AIX, DU, IRIX), in which case you might
+         want to install GNU make:
+         <http://www.gnu.org/software/make/>
+make[8]: *** [Makefile:541: bfd.info] Error 127
+make[8]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils/bfd/doc'
+make[7]: *** [Makefile:1641: info-recursive] Error 1
+make[7]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils/bfd'
+make[6]: *** [Makefile:2691: all-bfd] Error 2
+make[6]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils'
+make[5]: *** [Makefile:850: all] Error 2
+make[5]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils'
+make[4]: *** [Makefile:204: obj_binutils/.lc_built] Error 2
+make[4]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl'
+make[3]: *** [Makefile:170: install] Error 2
+make[3]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1'
+make[2]: *** [Makefile:174: both] Error 2
+make[2]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1'
+make[1]: *** [Makefile:382: /home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/.build] Error 1
+make[1]: Leaving directory '/home/user/dev/heads'
+Makefile:587: recipe for target 'all' failed
+make: *** [all] Error 2
+user@dev-coreboot-deb9:~/dev/heads$ make real.clean
+ Wrong make detected: 4.1
+LANG=C MAKE=/home/user/dev/heads/build/make-4.2.1/make /home/user/dev/heads/build/make-4.2.1/make real.clean
+make[1]: Entering directory '/home/user/dev/heads'
+for dir in \
+	qemu-coreboot dropbear-2016.74 slang-2.3.1a flashrom-1.0 kexec-tools-2.0.20 pinentry-1.1.0 libgcrypt-1.8.3 popt-1.16 coreboot-4.8.1/qemu-coreboot coreboot-4.8.1/3rdparty/blobs cryptsetup-1.7.3 mbedtls-2.4.2 npth-1.6 qrencode-3.4.4 busybox-1.28.0 pciutils-3.5.4 libksba-1.3.5 libassuan-2.5.1 libusb-1.0.21 linux-4.14.62/linux-qemu gnupg-2.2.10 flashtools-0.0.1 tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a msrtools-572ef8a2b873eda15a322daa48861140a078b92c newt-0.52.20 libgpg-error-1.32 libusb-compat-0.1.5 lvm2.2.02.168 util-linux-2.29.2 zlib-1.2.11 \
+	 \
+; do \
+	if [ ! -z "$dir" ]; then \
+		rm -rf "build/$dir"; \
+	fi; \
+done
+cd install && rm -rf -- *
+make[1]: Leaving directory '/home/user/dev/heads'
+user@dev-coreboot-deb9:~/dev/heads$ make v=1 BOARD=x230
+ Wrong make detected: 4.1
+wget -O "/home/user/dev/heads/packages/make-4.2.1.tar.bz2.tmp" "http://gnu.mirror.constant.com/make/make-4.2.1.tar.bz2"
+--2020-01-21 21:09:22--  http://gnu.mirror.constant.com/make/make-4.2.1.tar.bz2
+Resolving gnu.mirror.constant.com (gnu.mirror.constant.com)... 108.61.5.83, 2001:19f0:1595:1403::1096
+Connecting to gnu.mirror.constant.com (gnu.mirror.constant.com)|108.61.5.83|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1407126 (1.3M) [application/octet-stream]
+Saving to: ‘/home/user/dev/heads/packages/make-4.2.1.tar.bz2.tmp’
+
+/home/user/dev/heads/packages/m 100%[======================================================>]   1.34M  3.52MB/s    in 0.4s    
+
+2020-01-21 21:09:23 (3.52 MB/s) - ‘/home/user/dev/heads/packages/make-4.2.1.tar.bz2.tmp’ saved [1407126/1407126]
+
+if ! echo "d6e262bf3601b42d2b1e4ef8310029e1dcf20083c5446b4b7aa67081fdffc589  /home/user/dev/heads/packages/make-4.2.1.tar.bz2.tmp" | sha256sum --check -; then \
+	exit 1 ; \
+fi
+/home/user/dev/heads/packages/make-4.2.1.tar.bz2.tmp: OK
+mv "/home/user/dev/heads/packages/make-4.2.1.tar.bz2.tmp" "/home/user/dev/heads/packages/make-4.2.1.tar.bz2"
+tar xf "/home/user/dev/heads/packages/make-4.2.1.tar.bz2" -C "/home/user/dev/heads/build"
+touch "/home/user/dev/heads/build/make-4.2.1/.extract"
+( cd "/home/user/dev/heads/build/make-4.2.1/" ; patch -p1 ) < "patches/make-4.2.1.patch"
+patching file glob/glob.c
+touch "/home/user/dev/heads/build/make-4.2.1/.patch"
+cd "/home/user/dev/heads/build/make-4.2.1/" ; \
+./configure 2>&1 \
+| tee "/home/user/dev/heads/build/log/make.configure.log" \
+
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for style of include used by make... GNU
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking dependency style of gcc... gcc3
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking for gcc... (cached) gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether gcc accepts -g... (cached) yes
+checking for gcc option to accept ISO C89... (cached) none needed
+checking whether gcc understands -c and -o together... (cached) yes
+checking dependency style of gcc... (cached) gcc3
+checking for ranlib... ranlib
+checking how to run the C preprocessor... gcc -E
+checking for ar... ar
+checking for perl... perl
+checking the archiver (ar) interface... ar
+checking build system type... x86_64-pc-linux-gnu
+checking host system type... x86_64-pc-linux-gnu
+checking for library containing strerror... none required
+checking for a sed that does not truncate output... /bin/sed
+checking whether NLS is requested... yes
+checking for msgfmt... no
+checking for gmsgfmt... :
+checking for xgettext... no
+checking for msgmerge... no
+checking for ld used by gcc... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for shared library run path origin... done
+checking for CFPreferencesCopyAppValue... no
+checking for CFLocaleCopyCurrent... no
+checking for GNU gettext in libc... yes
+checking whether to use NLS... yes
+checking where the gettext function comes from... libc
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking for library containing getpwnam... none required
+checking for ANSI C header files... (cached) yes
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking whether stat file-mode macros are broken... no
+checking whether time.h and sys/time.h may both be included... yes
+checking for stdlib.h... (cached) yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking for unistd.h... (cached) yes
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking for string.h... (cached) yes
+checking for memory.h... (cached) yes
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking sys/resource.h usability... yes
+checking sys/resource.h presence... yes
+checking for sys/resource.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking sys/timeb.h usability... yes
+checking sys/timeb.h presence... yes
+checking for sys/timeb.h... yes
+checking sys/select.h usability... yes
+checking sys/select.h presence... yes
+checking for sys/select.h... yes
+checking for an ANSI C-conforming const... yes
+checking return type of signal handlers... void
+checking for uid_t in sys/types.h... yes
+checking for pid_t... yes
+checking for off_t... yes
+checking for size_t... yes
+checking for ssize_t... yes
+checking for unsigned long long int... yes
+checking for uintmax_t... yes
+checking for nanoseconds field of struct stat... st_mtim.tv_nsec
+checking whether to use high resolution file timestamps... yes
+checking for library containing clock_gettime... none required
+checking whether system uses MSDOS-style paths... no
+checking for standard gettimeofday... yes
+checking for strdup... yes
+checking for strndup... yes
+checking for mkstemp... yes
+checking for mktemp... yes
+checking for fdopen... yes
+checking for fileno... yes
+checking for dup... yes
+checking for dup2... yes
+checking for getcwd... yes
+checking for realpath... yes
+checking for sigsetmask... yes
+checking for sigaction... yes
+checking for getgroups... yes
+checking for seteuid... yes
+checking for setegid... yes
+checking for setlinebuf... yes
+checking for setreuid... yes
+checking for setregid... yes
+checking for getrlimit... yes
+checking for setrlimit... yes
+checking for setvbuf... yes
+checking for pipe... yes
+checking for strerror... yes
+checking for strsignal... yes
+checking for lstat... yes
+checking for readlink... yes
+checking for atexit... yes
+checking for isatty... yes
+checking for ttyname... yes
+checking for pselect... yes
+checking whether bsd_signal is declared... yes
+checking vfork.h usability... no
+checking vfork.h presence... no
+checking for vfork.h... no
+checking for fork... yes
+checking for vfork... yes
+checking for working fork... yes
+checking for working vfork... (cached) yes
+checking for strcasecmp... yes
+checking for strncasecmp... yes
+checking for strcmpi... no
+checking for strncmpi... no
+checking for stricmp... no
+checking for strnicmp... no
+checking for working strcoll... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking whether closedir returns void... no
+checking for pkg-config... /usr/bin/pkg-config
+checking pkg-config is at least version 0.9.0... yes
+checking for GUILE... no
+checking for GUILE... no
+checking for getloadavg... yes
+checking for pstat_getdynamic... no
+checking for kstat_open in -lkstat... no
+checking for getloadavg... yes
+checking whether getloadavg requires setgid... no
+checking whether sys_siglist is declared... yes
+checking whether _sys_siglist is declared... yes
+checking whether __sys_siglist is declared... no
+checking for sys/wait.h... yes
+checking for waitpid... yes
+checking for wait3... yes
+checking for union wait... no
+checking for SA_RESTART... yes
+checking whether dlopen is declared... yes
+checking whether dlsym is declared... yes
+checking whether dlerror is declared... yes
+checking for library containing dlopen... -ldl
+checking If the linker accepts -Wl,--export-dynamic... yes
+checking for location of SCCS get command... get
+checking if system libc has GNU glob... yes
+checking if malloc debugging is wanted... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating glob/Makefile
+config.status: creating po/Makefile.in
+config.status: creating config/Makefile
+config.status: creating doc/Makefile
+config.status: creating w32/Makefile
+config.status: creating tests/config-flags.pm
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing po-directories commands
+config.status: creating po/POTFILES
+config.status: creating po/Makefile
+config.status: creating build.sh
+touch "/home/user/dev/heads/build/make-4.2.1/.configured"
+make -C "/home/user/dev/heads/build/make-4.2.1/"  \
+	2>&1 \
+	| tee "/home/user/dev/heads/build/log/make.log" \
+	
+make[1]: Entering directory '/home/user/dev/heads/build/make-4.2.1'
+make  all-recursive
+make[2]: Entering directory '/home/user/dev/heads/build/make-4.2.1'
+Making all in glob
+make[3]: Entering directory '/home/user/dev/heads/build/make-4.2.1/glob'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/home/user/dev/heads/build/make-4.2.1/glob'
+Making all in config
+make[3]: Entering directory '/home/user/dev/heads/build/make-4.2.1/config'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/home/user/dev/heads/build/make-4.2.1/config'
+Making all in po
+make[3]: Entering directory '/home/user/dev/heads/build/make-4.2.1/po'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/home/user/dev/heads/build/make-4.2.1/po'
+Making all in doc
+make[3]: Entering directory '/home/user/dev/heads/build/make-4.2.1/doc'
+make[3]: Nothing to be done for 'all'.
+make[3]: Leaving directory '/home/user/dev/heads/build/make-4.2.1/doc'
+make[3]: Entering directory '/home/user/dev/heads/build/make-4.2.1'
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT ar.o -MD -MP -MF .deps/ar.Tpo -c -o ar.o ar.c
+mv -f .deps/ar.Tpo .deps/ar.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT arscan.o -MD -MP -MF .deps/arscan.Tpo -c -o arscan.o arscan.c
+mv -f .deps/arscan.Tpo .deps/arscan.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT commands.o -MD -MP -MF .deps/commands.Tpo -c -o commands.o commands.c
+mv -f .deps/commands.Tpo .deps/commands.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT default.o -MD -MP -MF .deps/default.Tpo -c -o default.o default.c
+mv -f .deps/default.Tpo .deps/default.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT dir.o -MD -MP -MF .deps/dir.Tpo -c -o dir.o dir.c
+mv -f .deps/dir.Tpo .deps/dir.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT expand.o -MD -MP -MF .deps/expand.Tpo -c -o expand.o expand.c
+mv -f .deps/expand.Tpo .deps/expand.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT file.o -MD -MP -MF .deps/file.Tpo -c -o file.o file.c
+mv -f .deps/file.Tpo .deps/file.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT function.o -MD -MP -MF .deps/function.Tpo -c -o function.o function.c
+mv -f .deps/function.Tpo .deps/function.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT getopt.o -MD -MP -MF .deps/getopt.Tpo -c -o getopt.o getopt.c
+mv -f .deps/getopt.Tpo .deps/getopt.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT getopt1.o -MD -MP -MF .deps/getopt1.Tpo -c -o getopt1.o getopt1.c
+mv -f .deps/getopt1.Tpo .deps/getopt1.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT guile.o -MD -MP -MF .deps/guile.Tpo -c -o guile.o guile.c
+mv -f .deps/guile.Tpo .deps/guile.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT implicit.o -MD -MP -MF .deps/implicit.Tpo -c -o implicit.o implicit.c
+mv -f .deps/implicit.Tpo .deps/implicit.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT job.o -MD -MP -MF .deps/job.Tpo -c -o job.o job.c
+mv -f .deps/job.Tpo .deps/job.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT load.o -MD -MP -MF .deps/load.Tpo -c -o load.o load.c
+mv -f .deps/load.Tpo .deps/load.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT loadapi.o -MD -MP -MF .deps/loadapi.Tpo -c -o loadapi.o loadapi.c
+mv -f .deps/loadapi.Tpo .deps/loadapi.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT main.o -MD -MP -MF .deps/main.Tpo -c -o main.o main.c
+mv -f .deps/main.Tpo .deps/main.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT misc.o -MD -MP -MF .deps/misc.Tpo -c -o misc.o misc.c
+mv -f .deps/misc.Tpo .deps/misc.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT posixos.o -MD -MP -MF .deps/posixos.Tpo -c -o posixos.o posixos.c
+mv -f .deps/posixos.Tpo .deps/posixos.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT output.o -MD -MP -MF .deps/output.Tpo -c -o output.o output.c
+mv -f .deps/output.Tpo .deps/output.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT read.o -MD -MP -MF .deps/read.Tpo -c -o read.o read.c
+mv -f .deps/read.Tpo .deps/read.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT remake.o -MD -MP -MF .deps/remake.Tpo -c -o remake.o remake.c
+mv -f .deps/remake.Tpo .deps/remake.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT rule.o -MD -MP -MF .deps/rule.Tpo -c -o rule.o rule.c
+mv -f .deps/rule.Tpo .deps/rule.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT signame.o -MD -MP -MF .deps/signame.Tpo -c -o signame.o signame.c
+mv -f .deps/signame.Tpo .deps/signame.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT strcache.o -MD -MP -MF .deps/strcache.Tpo -c -o strcache.o strcache.c
+mv -f .deps/strcache.Tpo .deps/strcache.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT variable.o -MD -MP -MF .deps/variable.Tpo -c -o variable.o variable.c
+mv -f .deps/variable.Tpo .deps/variable.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT version.o -MD -MP -MF .deps/version.Tpo -c -o version.o version.c
+mv -f .deps/version.Tpo .deps/version.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT vpath.o -MD -MP -MF .deps/vpath.Tpo -c -o vpath.o vpath.c
+mv -f .deps/vpath.Tpo .deps/vpath.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT hash.o -MD -MP -MF .deps/hash.Tpo -c -o hash.o hash.c
+mv -f .deps/hash.Tpo .deps/hash.Po
+gcc -DLOCALEDIR=\"/usr/local/share/locale\" -DLIBDIR=\"/usr/local/lib\" -DINCLUDEDIR=\"/usr/local/include\" -DHAVE_CONFIG_H -I.      -g -O2 -MT remote-stub.o -MD -MP -MF .deps/remote-stub.Tpo -c -o remote-stub.o remote-stub.c
+mv -f .deps/remote-stub.Tpo .deps/remote-stub.Po
+gcc  -g -O2 -Wl,--export-dynamic  -o make ar.o arscan.o commands.o default.o dir.o expand.o file.o function.o getopt.o getopt1.o guile.o implicit.o job.o load.o loadapi.o main.o misc.o posixos.o output.o read.o remake.o rule.o signame.o strcache.o variable.o version.o vpath.o hash.o remote-stub.o    -ldl 
+make[3]: Leaving directory '/home/user/dev/heads/build/make-4.2.1'
+make[2]: Leaving directory '/home/user/dev/heads/build/make-4.2.1'
+make[1]: Leaving directory '/home/user/dev/heads/build/make-4.2.1'
+LANG=C MAKE=/home/user/dev/heads/build/make-4.2.1/make /home/user/dev/heads/build/make-4.2.1/make  all
+make[1]: Entering directory '/home/user/dev/heads'
+2020-01-21 21:09:32-05:00 WGET https://www.coreboot.org/releases/coreboot-blobs-4.8.1.tar.xz
+--2020-01-21 21:09:32--  https://www.coreboot.org/releases/coreboot-blobs-4.8.1.tar.xz
+Resolving www.coreboot.org (www.coreboot.org)... 78.46.105.101, 2a01:4f8:121:1254::2
+Connecting to www.coreboot.org (www.coreboot.org)|78.46.105.101|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7075992 (6.7M) [application/octet-stream]
+Saving to: '/home/user/dev/heads/packages/coreboot-blobs-4.8.1.tar.xz.tmp'
+
+/home/user/dev/heads/packages/c 100%[======================================================>]   6.75M  5.52MB/s    in 1.2s    
+
+2020-01-21 21:09:34 (5.52 MB/s) - '/home/user/dev/heads/packages/coreboot-blobs-4.8.1.tar.xz.tmp' saved [7075992/7075992]
+
+echo "18aa509ae3af005a05d7b1e0b0246dc640249c14fc828f5144b6fd20bb10e295  /home/user/dev/heads/packages/coreboot-blobs-4.8.1.tar.xz" | sha256sum --check -
+/home/user/dev/heads/packages/coreboot-blobs-4.8.1.tar.xz: OK
+mkdir -p "/home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/"
+tar -xf "/home/user/dev/heads/packages/coreboot-blobs-4.8.1.tar.xz" --strip 3 -C "/home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/"
+if [ -r patches/coreboot-blobs-4.8.1.patch ]; then ( cd /home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/ ; patch -p1 ) < patches/coreboot-blobs-4.8.1.patch || exit 1 ; fi
+if [ -d patches/coreboot-blobs-4.8.1 ] && [ -r patches/coreboot-blobs-4.8.1 ] ; then for patch in patches/coreboot-blobs-4.8.1/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/coreboot-4.8.1/3rdparty/blobs/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 21:09:34-05:00 CONFIG coreboot-blobs
+2020-01-21 21:09:34-05:00 MAKE coreboot-blobs
+2020-01-21 21:09:34-05:00 DONE coreboot-blobs
+2020-01-21 21:09:34-05:00 WGET https://www.coreboot.org/releases/coreboot-4.8.1.tar.xz
+--2020-01-21 21:09:34--  https://www.coreboot.org/releases/coreboot-4.8.1.tar.xz
+Resolving www.coreboot.org (www.coreboot.org)... 78.46.105.101, 2a01:4f8:121:1254::2
+Connecting to www.coreboot.org (www.coreboot.org)|78.46.105.101|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 31763064 (30M) [application/octet-stream]
+Saving to: '/home/user/dev/heads/packages/coreboot-4.8.1.tar.xz.tmp'
+
+/home/user/dev/heads/packages/c 100%[======================================================>]  30.29M  9.50MB/s    in 3.4s    
+
+2020-01-21 21:09:39 (9.04 MB/s) - '/home/user/dev/heads/packages/coreboot-4.8.1.tar.xz.tmp' saved [31763064/31763064]
+
+echo "f0ddf4db0628c1fe1e8348c40084d9cbeb5771400c963fd419cda3995b69ad23  /home/user/dev/heads/packages/coreboot-4.8.1.tar.xz" | sha256sum --check -
+/home/user/dev/heads/packages/coreboot-4.8.1.tar.xz: OK
+mkdir -p "/home/user/dev/heads/build/coreboot-4.8.1/"
+tar -xf "/home/user/dev/heads/packages/coreboot-4.8.1.tar.xz" --strip 1 -C "/home/user/dev/heads/build/coreboot-4.8.1/"
+if [ -r patches/coreboot-4.8.1.patch ]; then ( cd /home/user/dev/heads/build/coreboot-4.8.1/ ; patch -p1 ) < patches/coreboot-4.8.1.patch || exit 1 ; fi
+if [ -d patches/coreboot-4.8.1 ] && [ -r patches/coreboot-4.8.1 ] ; then for patch in patches/coreboot-4.8.1/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/coreboot-4.8.1/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+Applying patch file : patches/coreboot-4.8.1/0000-measuredboot.patch 
+patching file src/Kconfig
+patching file src/drivers/pc80/tpm/romstage.c
+patching file src/drivers/pc80/tpm/tis.c
+patching file src/include/program_loading.h
+patching file src/lib/cbfs.c
+patching file src/lib/hardwaremain.c
+patching file src/lib/rmodule.c
+patching file src/security/tpm/Makefile.inc
+patching file src/security/tpm/sha1.c
+patching file src/security/tpm/sha1.h
+patching file src/security/tpm/tss.h
+patching file src/security/tpm/tss/tcg-1.2/tss.c
+Applying patch file : patches/coreboot-4.8.1/0001-mb-purism-librem_skl-add-support-for-13v4-15v4-board.patch 
+patching file src/mainboard/purism/librem_skl/Kconfig
+Hunk #1 succeeded at 21 (offset -4 lines).
+Hunk #2 succeeded at 32 (offset -4 lines).
+Hunk #3 succeeded at 55 (offset -4 lines).
+Hunk #4 succeeded at 69 (offset -4 lines).
+patching file src/mainboard/purism/librem_skl/Kconfig.name
+Applying patch file : patches/coreboot-4.8.1/0002-arch-x86-acpi-Add-DMAR-RMRR-helper-functions.patch 
+patching file src/arch/x86/acpi.c
+patching file src/arch/x86/include/arch/acpi.h
+patching file src/northbridge/intel/gm45/acpi.c
+patching file src/northbridge/intel/haswell/acpi.c
+patching file src/northbridge/intel/sandybridge/acpi.c
+patching file src/soc/intel/broadwell/acpi.c
+patching file src/soc/intel/fsp_broadwell_de/acpi.c
+patching file src/soc/intel/skylake/acpi.c
+Applying patch file : patches/coreboot-4.8.1/0003-soc-intel-skylake-Generate-ACPI-RMRR-table.patch 
+patching file src/soc/intel/common/block/include/intelblocks/systemagent.h
+patching file src/soc/intel/common/block/systemagent/systemagent_early.c
+patching file src/soc/intel/skylake/acpi.c
+Applying patch file : patches/coreboot-4.8.1/0007-intel-fsp-fsp2_0-Fix-FSP-2.0-headers-to-match-github.patch 
+patching file src/vendorcode/intel/fsp/fsp2_0/skykabylake/MemInfoHob.h
+Applying patch file : patches/coreboot-4.8.1/0009-Add-heads-TPM-measurements-to-Skylake-Kabylake.patch 
+patching file src/arch/x86/postcar.c
+patching file src/drivers/intel/fsp2_0/memory_init.c
+patching file src/drivers/intel/fsp2_0/silicon_init.c
+patching file src/drivers/pc80/tpm/Makefile.inc
+patching file src/security/tpm/Makefile.inc
+Hunk #1 succeeded at 13 with fuzz 2 (offset 9 lines).
+Applying patch file : patches/coreboot-4.8.1/0010-cross-compiler-support.patch 
+patching file Makefile
+Applying patch file : patches/coreboot-4.8.1/0020-kgpe-d16.patch 
+patching file src/mainboard/asus/kgpe-d16/Kconfig
+patching file src/mainboard/asus/kgpe-d16/devicetree.cb
+patching file src/mainboard/asus/kgpe-d16/dsdt.asl
+patching file src/mainboard/asus/kgpe-d16/mainboard.c
+patching file src/mainboard/asus/kgpe-d16/romstage.c
+Applying patch file : patches/coreboot-4.8.1/0030-sandybridge.patch 
+patching file src/northbridge/intel/sandybridge/romstage.c
+Applying patch file : patches/coreboot-4.8.1/0050-buildgcc-Do-not-try-to-install-GCC-if-build-failed.patch 
+patching file util/crossgcc/buildgcc
+Applying patch file : patches/coreboot-4.8.1/0051-buildgcc-Update-IASL-to-20180531.patch 
+patching file util/crossgcc/buildgcc
+patching file util/crossgcc/patches/acpica-unix2-20161222_iasl.patch
+patching file util/crossgcc/patches/acpica-unix2-20180531_iasl.patch
+patching file util/crossgcc/sum/acpica-unix2-20161222.tar.gz.cksum
+patching file util/crossgcc/sum/acpica-unix2-20180531.tar.gz.cksum
+Applying patch file : patches/coreboot-4.8.1/0052-crossgcc-Update-to-clang-6.0-cmake-3.11.3.patch 
+patching file util/crossgcc/buildgcc
+patching file util/crossgcc/sum/cfe-4.0.0.src.tar.xz.cksum
+patching file util/crossgcc/sum/cfe-6.0.0.src.tar.xz.cksum
+patching file util/crossgcc/sum/clang-tools-extra-4.0.0.src.tar.xz.cksum
+patching file util/crossgcc/sum/clang-tools-extra-6.0.0.src.tar.xz.cksum
+patching file util/crossgcc/sum/cmake-3.11.3.tar.gz.cksum
+patching file util/crossgcc/sum/cmake-3.9.0-rc3.tar.gz.cksum
+patching file util/crossgcc/sum/compiler-rt-4.0.0.src.tar.xz.cksum
+patching file util/crossgcc/sum/compiler-rt-6.0.0.src.tar.xz.cksum
+patching file util/crossgcc/sum/llvm-4.0.0.src.tar.xz.cksum
+patching file util/crossgcc/sum/llvm-6.0.0.src.tar.xz.cksum
+Applying patch file : patches/coreboot-4.8.1/0053-src-Get-rid-of-unneeded-whitespace.patch 
+patching file util/crossgcc/buildgcc
+Applying patch file : patches/coreboot-4.8.1/0054-util-crossgcc-Allow-building-a-new-gcc-against-new-b.patch 
+patching file util/crossgcc/buildgcc
+Applying patch file : patches/coreboot-4.8.1/0055-crosgcc-patches-Add-make-patch-for-GLIBC-glob-interf.patch 
+patching file util/crossgcc/patches/make-4.2.1_gnu_glob_interface_v2.patch
+Applying patch file : patches/coreboot-4.8.1/0056-util-crossgcc-update-to-gcc-8.1.0-and-binutils-2.30.patch 
+patching file util/crossgcc/buildgcc
+patching file util/crossgcc/patches/binutils-2.30_mips-gold.patch (renamed from util/crossgcc/patches/binutils-2.29.1_mips-gold.patch)
+patching file util/crossgcc/patches/binutils-2.30_nds32.patch
+patching file util/crossgcc/patches/binutils-2.30_no-bfd-doc.patch (renamed from util/crossgcc/patches/binutils-2.29.1_no-bfd-doc.patch)
+patching file util/crossgcc/patches/gcc-6.3.0_ada-raise.patch
+patching file util/crossgcc/patches/gcc-6.3.0_elf_biarch.patch
+patching file util/crossgcc/patches/gcc-6.3.0_memmodel.patch
+patching file util/crossgcc/patches/gcc-6.3.0_nds32_ite.patch
+patching file util/crossgcc/patches/gcc-6.3.0_no-p-var.patch
+patching file util/crossgcc/patches/gcc-6.3.0_pointer_integer.patch
+patching file util/crossgcc/patches/gcc-6.3.0_riscv.patch
+patching file util/crossgcc/patches/gcc-8.1.0_ada-musl_workaround.patch (renamed from util/crossgcc/patches/gcc-6.3.0_ada-musl_workaround.patch)
+patching file util/crossgcc/patches/gcc-8.1.0_armv6s-m.patch
+patching file util/crossgcc/patches/gcc-8.1.0_gnat.patch (renamed from util/crossgcc/patches/gcc-6.3.0_gnat.patch)
+patching file util/crossgcc/patches/gcc-8.1.0_libgcc.patch (renamed from util/crossgcc/patches/gcc-6.3.0_libgcc.patch)
+patching file util/crossgcc/patches/gcc-8.1.0_nds32_ite.patch
+patching file util/crossgcc/sum/binutils-2.29.1.tar.xz.cksum
+patching file util/crossgcc/sum/binutils-2.30.tar.xz.cksum
+patching file util/crossgcc/sum/gcc-6.3.0.tar.bz2.cksum
+patching file util/crossgcc/sum/gcc-8.1.0.tar.xz.cksum
+Applying patch file : patches/coreboot-4.8.1/0057-util-crosgcc-patches-update-make-4.2.1-patches.patch 
+patching file util/crossgcc/patches/make-4.2.1_0053-glob-Do-not-assume-glibc-glob-internals.patch
+patching file util/crossgcc/patches/make-4.2.1_0068-configure.ac-Support-GLIBC-glob-interface-version-2.patch
+patching file util/crossgcc/patches/make-4.2.1_gnu_glob_interface_v2.patch
+Applying patch file : patches/coreboot-4.8.1/0058-util-crosgcc-Fix-most-shellcheck-errors-in-buildgcc.patch 
+patching file util/crossgcc/buildgcc
+Applying patch file : patches/coreboot-4.8.1/0059-util-Add-description.md-to-each-util.patch 
+patching file util/crossgcc/description.md
+/home/user/dev/heads/build/make-4.2.1/make -C "/home/user/dev/heads/build/coreboot-4.8.1" CPUS=`nproc` iasl
+make[2]: Entering directory '/home/user/dev/heads/build/coreboot-4.8.1'
+Welcome to the coreboot cross toolchain builder v1.52 (June 11th, 2018)
+
+Building toolchain using 8 thread(s).
+
+Downloading and verifing tarballs ...
+ * acpica-unix2-20180531.tar.gz (downloading from https://acpica.org/sites/acpica/files/acpica-unix2-20180531.tar.gz)... 100%... hash verified ("17717140438d506533b4a56e34350749d7b84d6c")
+Downloaded tarballs ... ok
+Unpacking and patching ...
+ * acpica-unix2-20180531.tar.gz
+   o acpica-unix2-20180531_iasl.patch
+Unpacked and patched ... ok
+Building packages ...
+Building IASL v20180531 for host ... ok
+Packages built ... ok
+Copied EDK2 tools template ... ok
+Cleaning up temporary files... ok
+
+You can now run IASL ACPI compiler from /home/user/dev/heads/build/coreboot-4.8.1/util/crossgcc/xgcc.
+make[2]: Leaving directory '/home/user/dev/heads/build/coreboot-4.8.1'
+2020-01-21 21:10:06-05:00 CONFIG coreboot
+2020-01-21 21:10:07-05:00 WGET https://github.com/richfelker/musl-cross-make/archive/38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz
+--2020-01-21 21:10:07--  https://github.com/richfelker/musl-cross-make/archive/38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz
+Resolving github.com (github.com)... 140.82.114.3
+Connecting to github.com (github.com)|140.82.114.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://codeload.github.com/richfelker/musl-cross-make/tar.gz/38e52db8358c043ae82b346a2e6e66bc86a53bc1 [following]
+--2020-01-21 21:10:08--  https://codeload.github.com/richfelker/musl-cross-make/tar.gz/38e52db8358c043ae82b346a2e6e66bc86a53bc1
+Resolving codeload.github.com (codeload.github.com)... 140.82.114.10
+Connecting to codeload.github.com (codeload.github.com)|140.82.114.10|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz.tmp'
+
+/home/user/dev/heads/packages/m     [ <=>                                                   ] 138.81K  --.-KB/s    in 0.1s    
+
+2020-01-21 21:10:08 (988 KB/s) - '/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz.tmp' saved [142143]
+
+echo "b4b85d6d3ddab0f2b8650a53e775673f8c346fa2fb07d652a9880bd206ade100  /home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/"
+tar -xf "/home/user/dev/heads/packages/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.tar.gz" --strip 1 -C "/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/"
+if [ -r patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.patch ]; then ( cd /home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/ ; patch -p1 ) < patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1.patch || exit 1 ; fi
+if [ -d patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1 ] && [ -r patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1 ] ; then for patch in patches/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 21:10:08-05:00 CONFIG musl-cross
+2020-01-21 21:10:08-05:00 WGET https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.14.62.tar.xz
+--2020-01-21 21:10:08--  https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.14.62.tar.xz
+Resolving cdn.kernel.org (cdn.kernel.org)... 151.101.185.176, 2a04:4e42:46::432
+Connecting to cdn.kernel.org (cdn.kernel.org)|151.101.185.176|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 100957512 (96M) [application/x-xz]
+Saving to: '/home/user/dev/heads/packages/linux-4.14.62.tar.xz.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>]  96.28M  14.1MB/s    in 7.0s    
+
+2020-01-21 21:10:22 (13.7 MB/s) - '/home/user/dev/heads/packages/linux-4.14.62.tar.xz.tmp' saved [100957512/100957512]
+
+echo "51ca4d7e8ee156dc0f19bc7768915cfae41dbb0b4f251e4fa8b178c5674c22ab  /home/user/dev/heads/packages/linux-4.14.62.tar.xz" | sha256sum --check -
+/home/user/dev/heads/packages/linux-4.14.62.tar.xz: OK
+mkdir -p "/home/user/dev/heads/build/linux-4.14.62/"
+tar -xf "/home/user/dev/heads/packages/linux-4.14.62.tar.xz" --strip 1 -C "/home/user/dev/heads/build/linux-4.14.62/"
+if [ -r patches/linux-4.14.62.patch ]; then ( cd /home/user/dev/heads/build/linux-4.14.62/ ; patch -p1 ) < patches/linux-4.14.62.patch || exit 1 ; fi
+if [ -d patches/linux-4.14.62 ] && [ -r patches/linux-4.14.62 ] ; then for patch in patches/linux-4.14.62/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/linux-4.14.62/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+Applying patch file : patches/linux-4.14.62/0000-efi_bds.patch 
+patching file arch/x86/boot/compressed/eboot.c
+patching file arch/x86/boot/compressed/early_serial_console.c
+Applying patch file : patches/linux-4.14.62/0001-fake-acpi.patch 
+patching file drivers/acpi/acpica/evxfevnt.c
+patching file drivers/acpi/acpica/hwacpi.c
+Applying patch file : patches/linux-4.14.62/0002-nmi-squelch.patch 
+patching file arch/x86/kernel/nmi.c
+Hunk #1 succeeded at 292 (offset -11 lines).
+Hunk #2 succeeded at 302 (offset -11 lines).
+Applying patch file : patches/linux-4.14.62/0003-fake-trampoline.patch 
+patching file arch/x86/realmode/init.c
+Hunk #1 succeeded at 37 (offset 2 lines).
+Hunk #2 succeeded at 151 (offset 13 lines).
+Applying patch file : patches/linux-4.14.62/0010-winterfell-ahci.patch 
+patching file drivers/ata/libahci.c
+Hunk #1 succeeded at 543 (offset 6 lines).
+/home/user/dev/heads/build/make-4.2.1/make \
+	-C "/home/user/dev/heads/build/linux-4.14.62" \
+	INSTALL_HDR_PATH="/home/user/dev/heads/install" \
+	O="linux-4.14.62/linux-x230" \
+	KCONFIG_CONFIG="/home/user/dev/heads/config/linux-x230.config" \
+	headers_install
+make[2]: Entering directory '/home/user/dev/heads/build/linux-4.14.62'
+make[3]: Entering directory '/home/user/dev/heads/build/linux-4.14.62/linux-4.14.62/linux-x230'
+  CHK     include/generated/uapi/linux/version.h
+  UPD     include/generated/uapi/linux/version.h
+  HOSTCC  scripts/basic/fixdep
+  SYSTBL  arch/x86/include/generated/asm/syscalls_32.h
+  SYSHDR  arch/x86/include/generated/uapi/asm/unistd_32.h
+  SYSHDR  arch/x86/include/generated/uapi/asm/unistd_64.h
+  SYSHDR  arch/x86/include/generated/uapi/asm/unistd_x32.h
+  HOSTCC  arch/x86/tools/relocs_32.o
+  HOSTCC  arch/x86/tools/relocs_64.o
+  HOSTCC  arch/x86/tools/relocs_common.o
+  HOSTLD  arch/x86/tools/relocs
+  HOSTCC  scripts/unifdef
+  INSTALL include/asm-generic (36 files)
+  INSTALL include/drm (25 files)
+  INSTALL include/linux (486 files)
+  INSTALL include/linux/android (1 file)
+  INSTALL include/linux/byteorder (2 files)
+  INSTALL include/linux/caif (2 files)
+  INSTALL include/linux/can (6 files)
+  INSTALL include/linux/cifs (1 file)
+  INSTALL include/linux/dvb (8 files)
+  INSTALL include/linux/genwqe (1 file)
+  INSTALL include/linux/hdlc (1 file)
+  INSTALL include/linux/hsi (2 files)
+  INSTALL include/linux/iio (2 files)
+  INSTALL include/linux/isdn (1 file)
+  INSTALL include/linux/mmc (1 file)
+  INSTALL include/linux/netfilter (87 files)
+  INSTALL include/linux/netfilter/ipset (4 files)
+  INSTALL include/linux/netfilter_arp (2 files)
+  INSTALL include/linux/netfilter_bridge (17 files)
+  INSTALL include/linux/netfilter_ipv4 (9 files)
+  INSTALL include/linux/netfilter_ipv6 (12 files)
+  INSTALL include/linux/nfsd (5 files)
+  INSTALL include/linux/raid (2 files)
+  INSTALL include/linux/sched (1 file)
+  INSTALL include/linux/spi (1 file)
+  INSTALL include/linux/sunrpc (1 file)
+  INSTALL include/linux/tc_act (15 files)
+  INSTALL include/linux/tc_ematch (4 files)
+  INSTALL include/linux/usb (12 files)
+  INSTALL include/linux/wimax (1 file)
+  INSTALL include/misc (1 file)
+  INSTALL include/mtd (5 files)
+  INSTALL include/rdma (20 files)
+  INSTALL include/rdma/hfi (2 files)
+  INSTALL include/scsi (4 files)
+  INSTALL include/scsi/fc (4 files)
+  INSTALL include/sound (15 files)
+  INSTALL include/video (3 files)
+  INSTALL include/xen (4 files)
+  INSTALL include/asm (62 files)
+make[3]: Leaving directory '/home/user/dev/heads/build/linux-4.14.62/linux-4.14.62/linux-x230'
+make[2]: Leaving directory '/home/user/dev/heads/build/linux-4.14.62'
+2020-01-21 21:10:46-05:00 MAKE musl-cross
+tail /home/user/dev/heads/build/log/musl-cross.log
+-----
+         You might want to install the Texinfo package:
+         <http://www.gnu.org/software/texinfo/>
+         The spurious makeinfo call might also be the consequence of
+         using a buggy 'make' (AIX, DU, IRIX), in which case you might
+         want to install GNU make:
+         <http://www.gnu.org/software/make/>
+make[8]: *** [Makefile:541: bfd.info] Error 127
+make[8]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils/bfd/doc'
+make[7]: *** [Makefile:1641: info-recursive] Error 1
+make[7]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils/bfd'
+make[6]: *** [Makefile:2691: all-bfd] Error 2
+make[6]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils'
+make[5]: *** [Makefile:850: all] Error 2
+make[5]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl/obj_binutils'
+make[4]: *** [Makefile:204: obj_binutils/.lc_built] Error 2
+make[4]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/build/local/x86_64-linux-musl'
+make[3]: *** [Makefile:170: install] Error 2
+make[3]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1'
+make[2]: *** [Makefile:174: both] Error 2
+make[2]: Leaving directory '/home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1'
+make[1]: *** [Makefile:382: /home/user/dev/heads/build/musl-cross-38e52db8358c043ae82b346a2e6e66bc86a53bc1/.build] Error 1
+make[1]: Leaving directory '/home/user/dev/heads'
+Makefile:587: recipe for target 'all' failed
+make: *** [all] Error 2
+user@dev-coreboot-deb9:~/dev/heads$ sudo apt update
+Ign:1 https://deb.debian.org/debian stretch InRelease
+Get:2 https://deb.debian.org/debian-security stretch/updates InRelease [94.3 kB]
+Hit:4 https://deb.debian.org/debian stretch Release
+Get:5 https://deb.qubes-os.org/r4.0/vm stretch InRelease [2,502 B]
+Hit:3 https://packagecloud.io/AtomEditor/atom/any any InRelease 
+Get:6 https://deb.debian.org/debian-security stretch/updates/main amd64 Packages [514 kB]
+Get:8 https://deb.debian.org/debian-security stretch/updates/main Translation-en [227 kB]
+Get:9 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 Packages [19.7 kB]         
+Fetched 858 kB in 1s (553 kB/s)     
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+12 packages can be upgraded. Run 'apt list --upgradable' to see them.
+user@dev-coreboot-deb9:~/dev/heads$ sudo apt upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following packages will be upgraded:
+  libxen-4.8 libxenstore3.0 qubes-core-agent qubes-core-agent-dom0-updates qubes-core-agent-nautilus
+  qubes-core-agent-network-manager qubes-core-agent-networking qubes-core-agent-passwordless-root qubes-core-agent-qrexec
+  qubes-gpg-split xen-utils-common xenstore-utils
+12 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Need to get 928 kB of archives.
+After this operation, 2,048 B disk space will be freed.
+Do you want to continue? [Y/n] y
+Get:1 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 libxenstore3.0 amd64 2001:4.8.5-14+deb9u1 [25.3 kB]
+Get:2 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 libxen-4.8 amd64 2001:4.8.5-14+deb9u1 [412 kB]
+Get:3 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 xenstore-utils amd64 2001:4.8.5-14+deb9u1 [22.2 kB]
+Get:4 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 xen-utils-common all 2001:4.8.5-14+deb9u1 [169 kB]
+Get:5 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-core-agent-network-manager amd64 4.0.51-1+deb9u1 [27.4 kB]
+Get:6 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-core-agent-networking amd64 4.0.51-1+deb9u1 [33.7 kB]
+Get:7 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-core-agent-qrexec amd64 4.0.51-1+deb9u1 [45.8 kB]
+Get:8 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-core-agent-nautilus amd64 4.0.51-1+deb9u1 [25.9 kB]
+Get:9 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-core-agent-dom0-updates amd64 4.0.51-1+deb9u1 [26.9 kB]
+Get:10 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-core-agent-passwordless-root amd64 4.0.51-1+deb9u1 [30.4 kB]
+Get:11 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-core-agent amd64 4.0.51-1+deb9u1 [89.6 kB]
+Get:12 https://deb.qubes-os.org/r4.0/vm stretch/main amd64 qubes-gpg-split amd64 2.0.43-1+deb9u1 [20.4 kB]
+Fetched 928 kB in 3s (259 kB/s)             
+Reading changelogs... Done
+(Reading database ... 173928 files and directories currently installed.)
+Preparing to unpack .../00-libxenstore3.0_2001%3a4.8.5-14+deb9u1_amd64.deb ...
+Unpacking libxenstore3.0 (2001:4.8.5-14+deb9u1) over (2001:4.8.5-13+deb9u1) ...
+Preparing to unpack .../01-libxen-4.8_2001%3a4.8.5-14+deb9u1_amd64.deb ...
+Unpacking libxen-4.8 (2001:4.8.5-14+deb9u1) over (2001:4.8.5-13+deb9u1) ...
+Preparing to unpack .../02-xenstore-utils_2001%3a4.8.5-14+deb9u1_amd64.deb ...
+Unpacking xenstore-utils (2001:4.8.5-14+deb9u1) over (2001:4.8.5-13+deb9u1) ...
+Preparing to unpack .../03-xen-utils-common_2001%3a4.8.5-14+deb9u1_all.deb ...
+Unpacking xen-utils-common (2001:4.8.5-14+deb9u1) over (2001:4.8.5-13+deb9u1) ...
+Preparing to unpack .../04-qubes-core-agent-network-manager_4.0.51-1+deb9u1_amd64.deb ...
+Unpacking qubes-core-agent-network-manager (4.0.51-1+deb9u1) over (4.0.50-1+deb9u1) ...
+Preparing to unpack .../05-qubes-core-agent-networking_4.0.51-1+deb9u1_amd64.deb ...
+Unpacking qubes-core-agent-networking (4.0.51-1+deb9u1) over (4.0.50-1+deb9u1) ...
+Preparing to unpack .../06-qubes-core-agent-qrexec_4.0.51-1+deb9u1_amd64.deb ...
+Unpacking qubes-core-agent-qrexec (4.0.51-1+deb9u1) over (4.0.50-1+deb9u1) ...
+Preparing to unpack .../07-qubes-core-agent-nautilus_4.0.51-1+deb9u1_amd64.deb ...
+Unpacking qubes-core-agent-nautilus (4.0.51-1+deb9u1) over (4.0.50-1+deb9u1) ...
+Preparing to unpack .../08-qubes-core-agent-dom0-updates_4.0.51-1+deb9u1_amd64.deb ...
+Unpacking qubes-core-agent-dom0-updates (4.0.51-1+deb9u1) over (4.0.50-1+deb9u1) ...
+Preparing to unpack .../09-qubes-core-agent-passwordless-root_4.0.51-1+deb9u1_amd64.deb ...
+Unpacking qubes-core-agent-passwordless-root (4.0.51-1+deb9u1) over (4.0.50-1+deb9u1) ...
+Preparing to unpack .../10-qubes-core-agent_4.0.51-1+deb9u1_amd64.deb ...
+Unpacking qubes-core-agent (4.0.51-1+deb9u1) over (4.0.50-1+deb9u1) ...
+Preparing to unpack .../11-qubes-gpg-split_2.0.43-1+deb9u1_amd64.deb ...
+Unpacking qubes-gpg-split (2.0.43-1+deb9u1) over (2.0.41-1+deb9u1) ...
+Processing triggers for mime-support (3.60) ...
+Processing triggers for desktop-file-utils (0.23-1) ...
+Processing triggers for libglib2.0-0:amd64 (2.50.3-2+deb9u1) ...
+Setting up libxenstore3.0 (2001:4.8.5-14+deb9u1) ...
+Setting up xenstore-utils (2001:4.8.5-14+deb9u1) ...
+Setting up libxen-4.8 (2001:4.8.5-14+deb9u1) ...
+Processing triggers for libc-bin (2.24-11+deb9u4) ...
+Setting up qubes-gpg-split (2.0.43-1+deb9u1) ...
+Setting up xen-utils-common (2001:4.8.5-14+deb9u1) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+Setting up qubes-core-agent-passwordless-root (4.0.51-1+deb9u1) ...
+Setting up qubes-core-agent-qrexec (4.0.51-1+deb9u1) ...
+Setting up qubes-core-agent-dom0-updates (4.0.51-1+deb9u1) ...
+Setting up qubes-core-agent-nautilus (4.0.51-1+deb9u1) ...
+Setting up qubes-core-agent (4.0.51-1+deb9u1) ...
+Installing new version of config file /etc/default/grub.d/30-qubes.cfg ...
+Removed /etc/systemd/system/multi-user.target.wants/haveged.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/haveged.service → /etc/systemd/system/haveged.service.
+Leaving 'diversion of /etc/init/plymouth-shutdown.conf to /etc/init/plymouth-shutdown.conf.qubes-disabled by qubes-core-agent'
+Leaving 'diversion of /etc/init/prefdm.conf to /etc/init/prefdm.conf.qubes-disabled by qubes-core-agent'
+Leaving 'diversion of /etc/init/splash-manager.conf to /etc/init/splash-manager.conf.qubes-disabled by qubes-core-agent'
+Leaving 'diversion of /etc/init/start-ttys.conf to /etc/init/start-ttys.conf.qubes-disabled by qubes-core-agent'
+Leaving 'diversion of /etc/init/tty.conf to /etc/init/tty.conf.qubes-disabled by qubes-core-agent'
+Leaving 'diversion of /etc/init/serial.conf to /etc/init/serial.conf.qubes-orig by qubes-core-agent'
+qubes-sync-time.service is a disabled or a static unit, not starting it.
+qubes-update-check.service is a disabled or a static unit, not starting it.
+Setting up qubes-core-agent-networking (4.0.51-1+deb9u1) ...
+Installing new version of config file /etc/xen/scripts/vif-route-qubes ...
+Setting up qubes-core-agent-network-manager (4.0.51-1+deb9u1) ...
+user@dev-coreboot-deb9:~/dev/heads$ sudo apt install texinfo
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libtext-unidecode-perl libxml-libxml-perl libxml-namespacesupport-perl libxml-sax-base-perl libxml-sax-expat-perl
+  libxml-sax-perl tex-common
+Suggested packages:
+  debhelper texlive-base texlive-latex-base texlive-generic-recommended texinfo-doc-nonfree texlive-fonts-recommended
+The following NEW packages will be installed:
+  libtext-unidecode-perl libxml-libxml-perl libxml-namespacesupport-perl libxml-sax-base-perl libxml-sax-expat-perl
+  libxml-sax-perl tex-common texinfo
+0 upgraded, 8 newly installed, 0 to remove and 0 not upgraded.
+Need to get 2,420 kB of archives.
+After this operation, 11.9 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 https://deb.debian.org/debian stretch/main amd64 libtext-unidecode-perl all 1.30-1 [103 kB]
+Get:2 https://deb.debian.org/debian stretch/main amd64 libxml-namespacesupport-perl all 1.11-1 [14.8 kB]
+Get:3 https://deb.debian.org/debian stretch/main amd64 libxml-sax-base-perl all 1.07-1 [23.1 kB]
+Get:4 https://deb.debian.org/debian stretch/main amd64 libxml-sax-perl all 0.99+dfsg-2 [68.3 kB]
+Get:5 https://deb.debian.org/debian stretch/main amd64 libxml-libxml-perl amd64 2.0128+dfsg-1+deb9u1 [338 kB]
+Get:6 https://deb.debian.org/debian stretch/main amd64 libxml-sax-expat-perl all 0.40-2 [12.9 kB]
+Get:7 https://deb.debian.org/debian stretch/main amd64 tex-common all 6.06 [566 kB]
+Get:8 https://deb.debian.org/debian stretch/main amd64 texinfo amd64 6.3.0.dfsg.1-1+b2 [1,295 kB]
+Fetched 2,420 kB in 0s (2,700 kB/s)
+Selecting previously unselected package libtext-unidecode-perl.
+(Reading database ... 173928 files and directories currently installed.)
+Preparing to unpack .../0-libtext-unidecode-perl_1.30-1_all.deb ...
+Unpacking libtext-unidecode-perl (1.30-1) ...
+Selecting previously unselected package libxml-namespacesupport-perl.
+Preparing to unpack .../1-libxml-namespacesupport-perl_1.11-1_all.deb ...
+Unpacking libxml-namespacesupport-perl (1.11-1) ...
+Selecting previously unselected package libxml-sax-base-perl.
+Preparing to unpack .../2-libxml-sax-base-perl_1.07-1_all.deb ...
+Unpacking libxml-sax-base-perl (1.07-1) ...
+Selecting previously unselected package libxml-sax-perl.
+Preparing to unpack .../3-libxml-sax-perl_0.99+dfsg-2_all.deb ...
+Unpacking libxml-sax-perl (0.99+dfsg-2) ...
+Selecting previously unselected package libxml-libxml-perl.
+Preparing to unpack .../4-libxml-libxml-perl_2.0128+dfsg-1+deb9u1_amd64.deb ...
+Unpacking libxml-libxml-perl (2.0128+dfsg-1+deb9u1) ...
+Selecting previously unselected package libxml-sax-expat-perl.
+Preparing to unpack .../5-libxml-sax-expat-perl_0.40-2_all.deb ...
+Unpacking libxml-sax-expat-perl (0.40-2) ...
+Selecting previously unselected package tex-common.
+Preparing to unpack .../6-tex-common_6.06_all.deb ...
+Unpacking tex-common (6.06) ...
+Selecting previously unselected package texinfo.
+Preparing to unpack .../7-texinfo_6.3.0.dfsg.1-1+b2_amd64.deb ...
+Unpacking texinfo (6.3.0.dfsg.1-1+b2) ...
+Setting up tex-common (6.06) ...
+update-language: texlive-base not installed and configured, doing nothing!
+Setting up libxml-namespacesupport-perl (1.11-1) ...
+Setting up libtext-unidecode-perl (1.30-1) ...
+Setting up libxml-sax-base-perl (1.07-1) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+Setting up libxml-sax-perl (0.99+dfsg-2) ...
+update-perl-sax-parsers: Registering Perl SAX parser XML::SAX::PurePerl with priority 10...
+update-perl-sax-parsers: Updating overall Perl SAX parser modules info file...
+
+Creating config file /etc/perl/XML/SAX/ParserDetails.ini with new version
+Setting up libxml-libxml-perl (2.0128+dfsg-1+deb9u1) ...
+update-perl-sax-parsers: Registering Perl SAX parser XML::LibXML::SAX::Parser with priority 50...
+update-perl-sax-parsers: Registering Perl SAX parser XML::LibXML::SAX with priority 50...
+update-perl-sax-parsers: Updating overall Perl SAX parser modules info file...
+Replacing config file /etc/perl/XML/SAX/ParserDetails.ini with new version
+Setting up libxml-sax-expat-perl (0.40-2) ...
+update-perl-sax-parsers: Registering Perl SAX parser XML::SAX::Expat with priority 50...
+update-perl-sax-parsers: Updating overall Perl SAX parser modules info file...
+Replacing config file /etc/perl/XML/SAX/ParserDetails.ini with new version
+Setting up texinfo (6.3.0.dfsg.1-1+b2) ...
+user@dev-coreboot-deb9:~/dev/heads$ make v=1 BOARD=x230
+ Wrong make detected: 4.1
+LANG=C MAKE=/home/user/dev/heads/build/make-4.2.1/make /home/user/dev/heads/build/make-4.2.1/make  all
+make[1]: Entering directory '/home/user/dev/heads'
+/home/user/dev/heads/build/make-4.2.1/make -C "/home/user/dev/heads/build/coreboot-4.8.1" CPUS=`nproc` iasl
+make[2]: Entering directory '/home/user/dev/heads/build/coreboot-4.8.1'
+Welcome to the coreboot cross toolchain builder v1.52 (June 11th, 2018)
+
+Building toolchain using 8 thread(s).
+
+Downloading and verifing tarballs ...
+ * acpica-unix2-20180531.tar.gz (cached)... hash verified ("17717140438d506533b4a56e34350749d7b84d6c")
+Downloaded tarballs ... ok
+Unpacking and patching ...
+ * acpica-unix2-20180531.tar.gz
+   o acpica-unix2-20180531_iasl.patch
+Unpacked and patched ... ok
+Building packages ...
+Skipping IASL v20180531 for host as it is already built
+Packages built ... ok
+Copied EDK2 tools template ... ok
+Cleaning up temporary files... ok
+
+You can now run IASL ACPI compiler from /home/user/dev/heads/build/coreboot-4.8.1/util/crossgcc/xgcc.
+make[2]: Leaving directory '/home/user/dev/heads/build/coreboot-4.8.1'
+2020-01-21 21:23:05-05:00 CONFIG coreboot
+2020-01-21 21:23:08-05:00 MAKE musl-cross
+2020-01-21 22:14:19-05:00 DONE musl-cross
+2020-01-21 22:14:19-05:00 CONFIG linux
+2020-01-21 22:14:29-05:00 MAKE linux
+2020-01-21 22:24:31-05:00 DONE linux
+2020-01-21 22:24:31-05:00 INSTALL   build/linux-4.14.62/linux-x230//arch/x86/boot/bzImage => build/x230/bzImage
+795b307945343c5c7eb0b55a9285bb73f96832d295da9be5e11887db804ebe02  build/x230/bzImage
+795b307945343c5c7eb0b55a9285bb73f96832d295da9be5e11887db804ebe02  /home/user/dev/heads/build/x230/bzImage
+2020-01-21 22:24:31-05:00 INSTALL-MODULE drivers/net/ethernet/intel/e1000e/e1000e.ko
+2020-01-21 22:24:31-05:00 INSTALL-MODULE drivers/usb/host/ehci-hcd.ko
+2020-01-21 22:24:31-05:00 INSTALL-MODULE drivers/usb/host/ehci-pci.ko
+2020-01-21 22:24:31-05:00 INSTALL-MODULE drivers/usb/host/xhci-hcd.ko
+2020-01-21 22:24:31-05:00 INSTALL-MODULE drivers/usb/host/xhci-pci.ko
+2020-01-21 22:24:31-05:00 INSTALL-MODULE drivers/usb/storage/usb-storage.ko
+2020-01-21 22:24:31-05:00 CPIO      build/x230/modules.cpio
+a2fe6993f933f9a99a8d2b999f400ae57f834bc6443679c45db879c1dcdf3222  /home/user/dev/heads/build/x230/modules.cpio
+2020-01-21 22:24:32-05:00 HASHES    build/x230/modules.cpio
+2020-01-21 22:24:32-05:00 WGET https://busybox.net/downloads/busybox-1.28.0.tar.bz2
+--2020-01-21 22:24:32--  https://busybox.net/downloads/busybox-1.28.0.tar.bz2
+Resolving busybox.net (busybox.net)... 140.211.167.122
+Connecting to busybox.net (busybox.net)|140.211.167.122|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2261831 (2.2M) [application/x-bzip2]
+Saving to: '/home/user/dev/heads/packages/busybox-1.28.0.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/b 100%[======================================================>]   2.16M  2.68MB/s    in 0.8s    
+
+2020-01-21 22:24:33 (2.68 MB/s) - '/home/user/dev/heads/packages/busybox-1.28.0.tar.bz2.tmp' saved [2261831/2261831]
+
+echo "604553b7dbd59ded9e3ad7c6af49ed2cff599adf3e54d9463e5e0027b362019c  /home/user/dev/heads/packages/busybox-1.28.0.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/busybox-1.28.0.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/busybox-1.28.0/"
+tar -xf "/home/user/dev/heads/packages/busybox-1.28.0.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/busybox-1.28.0/"
+if [ -r patches/busybox-1.28.0.patch ]; then ( cd /home/user/dev/heads/build/busybox-1.28.0/ ; patch -p1 ) < patches/busybox-1.28.0.patch || exit 1 ; fi
+patching file libbb/messages.c
+if [ -d patches/busybox-1.28.0 ] && [ -r patches/busybox-1.28.0 ] ; then for patch in patches/busybox-1.28.0/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/busybox-1.28.0/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:24:34-05:00 INSTALL   config/busybox.config => /home/user/dev/heads/build/busybox-1.28.0/.config
+218e2f586f185bc4b9d650d2f5e88abf9af5ed965b29a608f942d76f5c9c8b23  /home/user/dev/heads/build/busybox-1.28.0/.config
+2020-01-21 22:24:34-05:00 CONFIG busybox
+2020-01-21 22:24:37-05:00 MAKE busybox
+2020-01-21 22:25:06-05:00 DONE busybox
+2020-01-21 22:25:06-05:00 SYMLINK bin/busybox
+2020-01-21 22:25:08-05:00 WGET https://www.zlib.net/zlib-1.2.11.tar.gz
+--2020-01-21 22:25:08--  https://www.zlib.net/zlib-1.2.11.tar.gz
+Resolving www.zlib.net (www.zlib.net)... 68.66.224.49
+Connecting to www.zlib.net (www.zlib.net)|68.66.224.49|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 607698 (593K) [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/zlib-1.2.11.tar.gz.tmp'
+
+/home/user/dev/heads/packages/z 100%[======================================================>] 593.46K  1.24MB/s    in 0.5s    
+
+2020-01-21 22:25:09 (1.24 MB/s) - '/home/user/dev/heads/packages/zlib-1.2.11.tar.gz.tmp' saved [607698/607698]
+
+echo "c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1  /home/user/dev/heads/packages/zlib-1.2.11.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/zlib-1.2.11.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/zlib-1.2.11/"
+tar -xf "/home/user/dev/heads/packages/zlib-1.2.11.tar.gz" --strip 1 -C "/home/user/dev/heads/build/zlib-1.2.11/"
+if [ -r patches/zlib-1.2.11.patch ]; then ( cd /home/user/dev/heads/build/zlib-1.2.11/ ; patch -p1 ) < patches/zlib-1.2.11.patch || exit 1 ; fi
+if [ -d patches/zlib-1.2.11 ] && [ -r patches/zlib-1.2.11 ] ; then for patch in patches/zlib-1.2.11/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/zlib-1.2.11/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:25:09-05:00 CONFIG zlib
+2020-01-21 22:25:09-05:00 MAKE zlib
+2020-01-21 22:25:14-05:00 DONE zlib
+2020-01-21 22:25:14-05:00 WGET https://kernel.org/pub/linux/utils/kernel/kexec/kexec-tools-2.0.20.tar.gz
+--2020-01-21 22:25:14--  https://kernel.org/pub/linux/utils/kernel/kexec/kexec-tools-2.0.20.tar.gz
+Resolving kernel.org (kernel.org)... 198.145.29.83
+Connecting to kernel.org (kernel.org)|198.145.29.83|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://www.kernel.org/pub/linux/utils/kernel/kexec/kexec-tools-2.0.20.tar.gz [following]
+--2020-01-21 22:25:14--  https://www.kernel.org/pub/linux/utils/kernel/kexec/kexec-tools-2.0.20.tar.gz
+Resolving www.kernel.org (www.kernel.org)... 147.75.58.133, 2604:1380:4020:600::1
+Connecting to www.kernel.org (www.kernel.org)|147.75.58.133|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://mirrors.edge.kernel.org/pub/linux/utils/kernel/kexec/kexec-tools-2.0.20.tar.gz [following]
+--2020-01-21 22:25:14--  https://mirrors.edge.kernel.org/pub/linux/utils/kernel/kexec/kexec-tools-2.0.20.tar.gz
+Resolving mirrors.edge.kernel.org (mirrors.edge.kernel.org)... 147.75.197.195, 2604:1380:1:3600::1
+Connecting to mirrors.edge.kernel.org (mirrors.edge.kernel.org)|147.75.197.195|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 420978 (411K) [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/kexec-tools-2.0.20.tar.gz.tmp'
+
+/home/user/dev/heads/packages/k 100%[======================================================>] 411.11K  --.-KB/s    in 0.1s    
+
+2020-01-21 22:25:15 (3.11 MB/s) - '/home/user/dev/heads/packages/kexec-tools-2.0.20.tar.gz.tmp' saved [420978/420978]
+
+echo "cb16d79818e0c9de3bb3e33ede5677c34a1d28c646379c7ab44e0faa3eb57a16  /home/user/dev/heads/packages/kexec-tools-2.0.20.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/kexec-tools-2.0.20.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/kexec-tools-2.0.20/"
+tar -xf "/home/user/dev/heads/packages/kexec-tools-2.0.20.tar.gz" --strip 1 -C "/home/user/dev/heads/build/kexec-tools-2.0.20/"
+if [ -r patches/kexec-2.0.20.patch ]; then ( cd /home/user/dev/heads/build/kexec-tools-2.0.20/ ; patch -p1 ) < patches/kexec-2.0.20.patch || exit 1 ; fi
+patching file Makefile.in
+patching file kexec/kexec.c
+patching file purgatory/Makefile
+patching file util/Makefile
+if [ -d patches/kexec-2.0.20 ] && [ -r patches/kexec-2.0.20 ] ; then for patch in patches/kexec-2.0.20/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/kexec-tools-2.0.20/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:25:15-05:00 CONFIG kexec
+2020-01-21 22:25:16-05:00 MAKE kexec
+2020-01-21 22:25:19-05:00 DONE kexec
+2020-01-21 22:25:19-05:00 INSTALL-BIN build/kexec-tools-2.0.20/build/sbin/kexec
+2020-01-21 22:25:19-05:00 WGET https://tls.mbed.org/download/mbedtls-2.4.2-gpl.tgz
+--2020-01-21 22:25:19--  https://tls.mbed.org/download/mbedtls-2.4.2-gpl.tgz
+Resolving tls.mbed.org (tls.mbed.org)... 79.170.91.36
+Connecting to tls.mbed.org (tls.mbed.org)|79.170.91.36|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1908664 (1.8M) [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/mbedtls-2.4.2-gpl.tgz.tmp'
+
+/home/user/dev/heads/packages/m 100%[======================================================>]   1.82M  2.26MB/s    in 0.8s    
+
+2020-01-21 22:25:21 (2.26 MB/s) - '/home/user/dev/heads/packages/mbedtls-2.4.2-gpl.tgz.tmp' saved [1908664/1908664]
+
+echo "d01f2d5586a52055329d194d909103f445bd2d0b6b2b5f1c830fbf828ac6299f  /home/user/dev/heads/packages/mbedtls-2.4.2-gpl.tgz" | sha256sum --check -
+/home/user/dev/heads/packages/mbedtls-2.4.2-gpl.tgz: OK
+mkdir -p "/home/user/dev/heads/build/mbedtls-2.4.2/"
+tar -xf "/home/user/dev/heads/packages/mbedtls-2.4.2-gpl.tgz" --strip 1 -C "/home/user/dev/heads/build/mbedtls-2.4.2/"
+if [ -r patches/mbedtls-2.4.2.patch ]; then ( cd /home/user/dev/heads/build/mbedtls-2.4.2/ ; patch -p1 ) < patches/mbedtls-2.4.2.patch || exit 1 ; fi
+if [ -d patches/mbedtls-2.4.2 ] && [ -r patches/mbedtls-2.4.2 ] ; then for patch in patches/mbedtls-2.4.2/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/mbedtls-2.4.2/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:25:21-05:00 CONFIG mbedtls
+2020-01-21 22:25:21-05:00 MAKE mbedtls
+2020-01-21 22:25:31-05:00 DONE mbedtls
+2020-01-21 22:25:31-05:00 WGET https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+--2020-01-21 22:25:31--  https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+Resolving fukuchi.org (fukuchi.org)... 173.230.148.37
+Connecting to fukuchi.org (fukuchi.org)|173.230.148.37|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 468788 (458K) [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/qrencode-3.4.4.tar.gz.tmp'
+
+/home/user/dev/heads/packages/q 100%[======================================================>] 457.80K  1.03MB/s    in 0.4s    
+
+2020-01-21 22:25:32 (1.03 MB/s) - '/home/user/dev/heads/packages/qrencode-3.4.4.tar.gz.tmp' saved [468788/468788]
+
+echo "e794e26a96019013c0e3665cb06b18992668f352c5553d0a553f5d144f7f2a72  /home/user/dev/heads/packages/qrencode-3.4.4.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/qrencode-3.4.4.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/qrencode-3.4.4/"
+tar -xf "/home/user/dev/heads/packages/qrencode-3.4.4.tar.gz" --strip 1 -C "/home/user/dev/heads/build/qrencode-3.4.4/"
+if [ -r patches/qrencode-3.4.4.patch ]; then ( cd /home/user/dev/heads/build/qrencode-3.4.4/ ; patch -p1 ) < patches/qrencode-3.4.4.patch || exit 1 ; fi
+if [ -d patches/qrencode-3.4.4 ] && [ -r patches/qrencode-3.4.4 ] ; then for patch in patches/qrencode-3.4.4/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/qrencode-3.4.4/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:25:33-05:00 CONFIG qrencode
+2020-01-21 22:25:34-05:00 MAKE qrencode
+2020-01-21 22:25:36-05:00 DONE qrencode
+2020-01-21 22:25:36-05:00 WGET https://github.com/osresearch/tpmtotp/archive/18b860fdcf5a55537c8395b891f2b2a5c24fc00a.tar.gz
+--2020-01-21 22:25:36--  https://github.com/osresearch/tpmtotp/archive/18b860fdcf5a55537c8395b891f2b2a5c24fc00a.tar.gz
+Resolving github.com (github.com)... 192.30.253.113
+Connecting to github.com (github.com)|192.30.253.113|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://codeload.github.com/osresearch/tpmtotp/tar.gz/18b860fdcf5a55537c8395b891f2b2a5c24fc00a [following]
+--2020-01-21 22:25:36--  https://codeload.github.com/osresearch/tpmtotp/tar.gz/18b860fdcf5a55537c8395b891f2b2a5c24fc00a
+Resolving codeload.github.com (codeload.github.com)... 192.30.253.121
+Connecting to codeload.github.com (codeload.github.com)|192.30.253.121|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a.tar.gz.tmp'
+
+/home/user/dev/heads/packages/t     [ <=>                                                   ] 287.79K  1.44MB/s    in 0.2s    
+
+2020-01-21 22:25:37 (1.44 MB/s) - '/home/user/dev/heads/packages/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a.tar.gz.tmp' saved [294697]
+
+echo "1082f2b0e4af833e04220dddedcc21a39eb39ee4dc5668bb010e7bcc795c606c  /home/user/dev/heads/packages/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/"
+tar -xf "/home/user/dev/heads/packages/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a.tar.gz" --strip 1 -C "/home/user/dev/heads/build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/"
+if [ -r patches/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a.patch ]; then ( cd /home/user/dev/heads/build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/ ; patch -p1 ) < patches/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a.patch || exit 1 ; fi
+if [ -d patches/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a ] && [ -r patches/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a ] ; then for patch in patches/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:25:37-05:00 CONFIG tpmtotp
+2020-01-21 22:25:37-05:00 MAKE tpmtotp
+2020-01-21 22:25:42-05:00 DONE tpmtotp
+2020-01-21 22:25:42-05:00 INSTALL-BIN build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/totp
+2020-01-21 22:25:42-05:00 INSTALL-BIN build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/hotp
+2020-01-21 22:25:42-05:00 INSTALL-BIN build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/base32
+2020-01-21 22:25:42-05:00 INSTALL-BIN build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/qrenc
+2020-01-21 22:25:42-05:00 INSTALL-BIN build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/util/tpm
+2020-01-21 22:25:42-05:00 WGET https://www.kernel.org/pub/software/utils/pciutils/pciutils-3.5.4.tar.xz
+--2020-01-21 22:25:42--  https://www.kernel.org/pub/software/utils/pciutils/pciutils-3.5.4.tar.xz
+Resolving www.kernel.org (www.kernel.org)... 147.75.58.133, 2604:1380:4020:600::1
+Connecting to www.kernel.org (www.kernel.org)|147.75.58.133|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://mirrors.edge.kernel.org/pub/software/utils/pciutils/pciutils-3.5.4.tar.xz [following]
+--2020-01-21 22:25:42--  https://mirrors.edge.kernel.org/pub/software/utils/pciutils/pciutils-3.5.4.tar.xz
+Resolving mirrors.edge.kernel.org (mirrors.edge.kernel.org)... 147.75.197.195, 2604:1380:1:3600::1
+Connecting to mirrors.edge.kernel.org (mirrors.edge.kernel.org)|147.75.197.195|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 320412 (313K) [application/x-xz]
+Saving to: '/home/user/dev/heads/packages/pciutils-3.5.4.tar.xz.tmp'
+
+/home/user/dev/heads/packages/p 100%[======================================================>] 312.90K  --.-KB/s    in 0.1s    
+
+2020-01-21 22:25:42 (2.49 MB/s) - '/home/user/dev/heads/packages/pciutils-3.5.4.tar.xz.tmp' saved [320412/320412]
+
+echo "64293c6ab9318c40ef262b76d87bd9097531759752bac556e50979b1e63cfe66  /home/user/dev/heads/packages/pciutils-3.5.4.tar.xz" | sha256sum --check -
+/home/user/dev/heads/packages/pciutils-3.5.4.tar.xz: OK
+mkdir -p "/home/user/dev/heads/build/pciutils-3.5.4/"
+tar -xf "/home/user/dev/heads/packages/pciutils-3.5.4.tar.xz" --strip 1 -C "/home/user/dev/heads/build/pciutils-3.5.4/"
+if [ -r patches/pciutils-3.5.4.patch ]; then ( cd /home/user/dev/heads/build/pciutils-3.5.4/ ; patch -p1 ) < patches/pciutils-3.5.4.patch || exit 1 ; fi
+patching file lib/types.h
+if [ -d patches/pciutils-3.5.4 ] && [ -r patches/pciutils-3.5.4 ] ; then for patch in patches/pciutils-3.5.4/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/pciutils-3.5.4/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:25:43-05:00 CONFIG pciutils
+2020-01-21 22:25:43-05:00 MAKE pciutils
+2020-01-21 22:25:45-05:00 DONE pciutils
+2020-01-21 22:25:45-05:00 INSTALL-BIN build/pciutils-3.5.4/lspci
+2020-01-21 22:25:45-05:00 WGET https://download.flashrom.org/releases/flashrom-1.0.tar.bz2
+--2020-01-21 22:25:45--  https://download.flashrom.org/releases/flashrom-1.0.tar.bz2
+Resolving download.flashrom.org (download.flashrom.org)... 78.46.105.101, 2a01:4f8:121:1254::2
+Connecting to download.flashrom.org (download.flashrom.org)|78.46.105.101|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 321693 (314K) [application/octet-stream]
+Saving to: '/home/user/dev/heads/packages/flashrom-1.0.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/f 100%[======================================================>] 314.15K   788KB/s    in 0.4s    
+
+2020-01-21 22:25:46 (788 KB/s) - '/home/user/dev/heads/packages/flashrom-1.0.tar.bz2.tmp' saved [321693/321693]
+
+echo "3702fa215ba5fb5af8e54c852d239899cfa1389194c1e51cb2a170c4dc9dee64  /home/user/dev/heads/packages/flashrom-1.0.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/flashrom-1.0.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/flashrom-1.0/"
+tar -xf "/home/user/dev/heads/packages/flashrom-1.0.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/flashrom-1.0/"
+if [ -r patches/flashrom-1.0.patch ]; then ( cd /home/user/dev/heads/build/flashrom-1.0/ ; patch -p1 ) < patches/flashrom-1.0.patch || exit 1 ; fi
+if [ -d patches/flashrom-1.0 ] && [ -r patches/flashrom-1.0 ] ; then for patch in patches/flashrom-1.0/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/flashrom-1.0/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+Applying patch file : patches/flashrom-1.0/0100-enable-kgpe-d16.patch 
+patching file Makefile
+patching file ast1100.c
+patching file ast2400.c
+patching file chipdrivers.h
+patching file cli_output.c
+patching file flash.h
+patching file flashchips.c
+patching file flashchips.h
+patching file flashrom.c
+patching file pcidev.c
+patching file programmer.h
+patching file spi.c
+patching file spi25.c
+patching file spi4ba.c
+patching file spi4ba.h
+Applying patch file : patches/flashrom-1.0/0101-enable-thinkpad-x220.patch 
+patching file board_enable.c
+2020-01-21 22:25:46-05:00 CONFIG flashrom
+2020-01-21 22:25:46-05:00 MAKE flashrom
+2020-01-21 22:25:51-05:00 DONE flashrom
+2020-01-21 22:25:51-05:00 INSTALL-BIN build/flashrom-1.0/flashrom
+2020-01-21 22:25:51-05:00 WGET https://www.kernel.org/pub/linux/utils/util-linux/v2.29/util-linux-2.29.2.tar.xz
+--2020-01-21 22:25:51--  https://www.kernel.org/pub/linux/utils/util-linux/v2.29/util-linux-2.29.2.tar.xz
+Resolving www.kernel.org (www.kernel.org)... 147.75.58.133, 2604:1380:4020:600::1
+Connecting to www.kernel.org (www.kernel.org)|147.75.58.133|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.29/util-linux-2.29.2.tar.xz [following]
+--2020-01-21 22:25:51--  https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.29/util-linux-2.29.2.tar.xz
+Resolving mirrors.edge.kernel.org (mirrors.edge.kernel.org)... 147.75.197.195, 2604:1380:1:3600::1
+Connecting to mirrors.edge.kernel.org (mirrors.edge.kernel.org)|147.75.197.195|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4277668 (4.1M) [application/x-xz]
+Saving to: '/home/user/dev/heads/packages/util-linux-2.29.2.tar.xz.tmp'
+
+/home/user/dev/heads/packages/u 100%[======================================================>]   4.08M  9.25MB/s    in 0.4s    
+
+2020-01-21 22:25:52 (9.25 MB/s) - '/home/user/dev/heads/packages/util-linux-2.29.2.tar.xz.tmp' saved [4277668/4277668]
+
+echo "accea4d678209f97f634f40a93b7e9fcad5915d1f4749f6c47bee6bf110fe8e3  /home/user/dev/heads/packages/util-linux-2.29.2.tar.xz" | sha256sum --check -
+/home/user/dev/heads/packages/util-linux-2.29.2.tar.xz: OK
+mkdir -p "/home/user/dev/heads/build/util-linux-2.29.2/"
+tar -xf "/home/user/dev/heads/packages/util-linux-2.29.2.tar.xz" --strip 1 -C "/home/user/dev/heads/build/util-linux-2.29.2/"
+if [ -r patches/util-linux-2.29.2.patch ]; then ( cd /home/user/dev/heads/build/util-linux-2.29.2/ ; patch -p1 ) < patches/util-linux-2.29.2.patch || exit 1 ; fi
+if [ -d patches/util-linux-2.29.2 ] && [ -r patches/util-linux-2.29.2 ] ; then for patch in patches/util-linux-2.29.2/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/util-linux-2.29.2/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:25:52-05:00 CONFIG util-linux
+2020-01-21 22:26:03-05:00 MAKE util-linux
+2020-01-21 22:26:35-05:00 DONE util-linux
+2020-01-21 22:26:35-05:00 WGET https://launchpad.net/popt/head/1.16/+download/popt-1.16.tar.gz
+--2020-01-21 22:26:35--  https://launchpad.net/popt/head/1.16/+download/popt-1.16.tar.gz
+Resolving launchpad.net (launchpad.net)... 91.189.89.223, 91.189.89.222, 2001:67c:1560:8003::8004, ...
+Connecting to launchpad.net (launchpad.net)|91.189.89.223|:443... connected.
+HTTP request sent, awaiting response... 303 See Other
+Location: https://launchpadlibrarian.net/54982493/popt-1.16.tar.gz [following]
+--2020-01-21 22:26:35--  https://launchpadlibrarian.net/54982493/popt-1.16.tar.gz
+Resolving launchpadlibrarian.net (launchpadlibrarian.net)... 91.189.89.228, 91.189.89.229, 2001:67c:1560:8003::8007, ...
+Connecting to launchpadlibrarian.net (launchpadlibrarian.net)|91.189.89.228|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 702769 (686K) [application/x-tar]
+Saving to: '/home/user/dev/heads/packages/popt-1.16.tar.gz.tmp'
+
+/home/user/dev/heads/packages/p 100%[======================================================>] 686.30K  1.19MB/s    in 0.6s    
+
+2020-01-21 22:26:37 (1.19 MB/s) - '/home/user/dev/heads/packages/popt-1.16.tar.gz.tmp' saved [702769/702769]
+
+echo "e728ed296fe9f069a0e005003c3d6b2dde3d9cad453422a10d6558616d304cc8  /home/user/dev/heads/packages/popt-1.16.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/popt-1.16.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/popt-1.16/"
+tar -xf "/home/user/dev/heads/packages/popt-1.16.tar.gz" --strip 1 -C "/home/user/dev/heads/build/popt-1.16/"
+if [ -r patches/popt-1.16.patch ]; then ( cd /home/user/dev/heads/build/popt-1.16/ ; patch -p1 ) < patches/popt-1.16.patch || exit 1 ; fi
+if [ -d patches/popt-1.16 ] && [ -r patches/popt-1.16 ] ; then for patch in patches/popt-1.16/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/popt-1.16/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:26:37-05:00 CONFIG popt
+2020-01-21 22:26:41-05:00 MAKE popt
+2020-01-21 22:26:43-05:00 DONE popt
+2020-01-21 22:26:43-05:00 WGET https://mirrors.kernel.org/sourceware/lvm2/LVM2.2.02.168.tgz
+--2020-01-21 22:26:43--  https://mirrors.kernel.org/sourceware/lvm2/LVM2.2.02.168.tgz
+Resolving mirrors.kernel.org (mirrors.kernel.org)... 198.145.21.9, 2001:4f8:4:6f:0:1994:3:14
+Connecting to mirrors.kernel.org (mirrors.kernel.org)|198.145.21.9|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2159438 (2.1M) [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/LVM2.2.02.168.tgz.tmp'
+
+/home/user/dev/heads/packages/L 100%[======================================================>]   2.06M  3.05MB/s    in 0.7s    
+
+2020-01-21 22:26:45 (3.05 MB/s) - '/home/user/dev/heads/packages/LVM2.2.02.168.tgz.tmp' saved [2159438/2159438]
+
+echo "23a3d1cddd41b3ef51812ebf83e9fa491f502fe74130d4263be327a91914660d  /home/user/dev/heads/packages/LVM2.2.02.168.tgz" | sha256sum --check -
+/home/user/dev/heads/packages/LVM2.2.02.168.tgz: OK
+mkdir -p "/home/user/dev/heads/build/lvm2.2.02.168/"
+tar -xf "/home/user/dev/heads/packages/LVM2.2.02.168.tgz" --strip 1 -C "/home/user/dev/heads/build/lvm2.2.02.168/"
+if [ -r patches/lvm2-2.02.168.patch ]; then ( cd /home/user/dev/heads/build/lvm2.2.02.168/ ; patch -p1 ) < patches/lvm2-2.02.168.patch || exit 1 ; fi
+patching file lib/mm/memlock.c
+patching file libdm/libdm-stats.c
+patching file libdm/Makefile.in
+patching file make.tmpl.in
+patching file tools/lvmcmdline.c
+if [ -d patches/lvm2-2.02.168 ] && [ -r patches/lvm2-2.02.168 ] ; then for patch in patches/lvm2-2.02.168/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/lvm2.2.02.168/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:26:45-05:00 CONFIG lvm2
+2020-01-21 22:26:51-05:00 MAKE lvm2
+2020-01-21 22:27:20-05:00 DONE lvm2
+2020-01-21 22:27:20-05:00 WGET https://www.kernel.org/pub/linux/utils/cryptsetup/v1.7/cryptsetup-1.7.3.tar.xz
+--2020-01-21 22:27:20--  https://www.kernel.org/pub/linux/utils/cryptsetup/v1.7/cryptsetup-1.7.3.tar.xz
+Resolving www.kernel.org (www.kernel.org)... 147.75.58.133, 2604:1380:4020:600::1
+Connecting to www.kernel.org (www.kernel.org)|147.75.58.133|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://mirrors.edge.kernel.org/pub/linux/utils/cryptsetup/v1.7/cryptsetup-1.7.3.tar.xz [following]
+--2020-01-21 22:27:21--  https://mirrors.edge.kernel.org/pub/linux/utils/cryptsetup/v1.7/cryptsetup-1.7.3.tar.xz
+Resolving mirrors.edge.kernel.org (mirrors.edge.kernel.org)... 147.75.197.195, 2604:1380:1:3600::1
+Connecting to mirrors.edge.kernel.org (mirrors.edge.kernel.org)|147.75.197.195|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1228432 (1.2M) [application/x-xz]
+Saving to: '/home/user/dev/heads/packages/cryptsetup-1.7.3.tar.xz.tmp'
+
+/home/user/dev/heads/packages/c 100%[======================================================>]   1.17M  5.33MB/s    in 0.2s    
+
+2020-01-21 22:27:21 (5.33 MB/s) - '/home/user/dev/heads/packages/cryptsetup-1.7.3.tar.xz.tmp' saved [1228432/1228432]
+
+echo "af2b04e8475cf40b8d9ffd97a1acfa73aa787c890430afd89804fb544d6adc02  /home/user/dev/heads/packages/cryptsetup-1.7.3.tar.xz" | sha256sum --check -
+/home/user/dev/heads/packages/cryptsetup-1.7.3.tar.xz: OK
+mkdir -p "/home/user/dev/heads/build/cryptsetup-1.7.3/"
+tar -xf "/home/user/dev/heads/packages/cryptsetup-1.7.3.tar.xz" --strip 1 -C "/home/user/dev/heads/build/cryptsetup-1.7.3/"
+if [ -r patches/cryptsetup-1.7.3.patch ]; then ( cd /home/user/dev/heads/build/cryptsetup-1.7.3/ ; patch -p1 ) < patches/cryptsetup-1.7.3.patch || exit 1 ; fi
+patching file configure
+patching file src/Makefile.in
+if [ -d patches/cryptsetup-1.7.3 ] && [ -r patches/cryptsetup-1.7.3 ] ; then for patch in patches/cryptsetup-1.7.3/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/cryptsetup-1.7.3/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:27:21-05:00 CONFIG cryptsetup
+2020-01-21 22:27:26-05:00 MAKE cryptsetup
+2020-01-21 22:27:34-05:00 DONE cryptsetup
+2020-01-21 22:27:34-05:00 INSTALL-BIN build/cryptsetup-1.7.3/src/.libs/cryptsetup
+2020-01-21 22:27:34-05:00 INSTALL-BIN build/cryptsetup-1.7.3/src/.libs/cryptsetup-reencrypt
+2020-01-21 22:27:34-05:00 INSTALL-BIN build/cryptsetup-1.7.3/src/.libs/veritysetup
+2020-01-21 22:27:34-05:00 WGET https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-1.32.tar.bz2
+--2020-01-21 22:27:34--  https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-1.32.tar.bz2
+Resolving gnupg.org (gnupg.org)... 217.69.76.60, 2001:aa8:fff1:2100::60
+Connecting to gnupg.org (gnupg.org)|217.69.76.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 904382 (883K) [text/plain]
+Saving to: '/home/user/dev/heads/packages/libgpg-error-1.32.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>] 883.19K  1.21MB/s    in 0.7s    
+
+2020-01-21 22:27:36 (1.21 MB/s) - '/home/user/dev/heads/packages/libgpg-error-1.32.tar.bz2.tmp' saved [904382/904382]
+
+echo "c345c5e73cc2332f8d50db84a2280abfb1d8f6d4f1858b9daa30404db44540ca  /home/user/dev/heads/packages/libgpg-error-1.32.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/libgpg-error-1.32.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/libgpg-error-1.32/"
+tar -xf "/home/user/dev/heads/packages/libgpg-error-1.32.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/libgpg-error-1.32/"
+if [ -r patches/libgpg-error-1.32.patch ]; then ( cd /home/user/dev/heads/build/libgpg-error-1.32/ ; patch -p1 ) < patches/libgpg-error-1.32.patch || exit 1 ; fi
+if [ -d patches/libgpg-error-1.32 ] && [ -r patches/libgpg-error-1.32 ] ; then for patch in patches/libgpg-error-1.32/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/libgpg-error-1.32/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:27:36-05:00 CONFIG libgpg-error
+2020-01-21 22:27:43-05:00 MAKE libgpg-error
+2020-01-21 22:27:46-05:00 DONE libgpg-error
+2020-01-21 22:27:46-05:00 WGET https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.8.3.tar.bz2
+--2020-01-21 22:27:46--  https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-1.8.3.tar.bz2
+Resolving gnupg.org (gnupg.org)... 217.69.76.60, 2001:aa8:fff1:2100::60
+Connecting to gnupg.org (gnupg.org)|217.69.76.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2989166 (2.9M) [text/plain]
+Saving to: '/home/user/dev/heads/packages/libgcrypt-1.8.3.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>]   2.85M  2.93MB/s    in 1.0s    
+
+2020-01-21 22:27:48 (2.93 MB/s) - '/home/user/dev/heads/packages/libgcrypt-1.8.3.tar.bz2.tmp' saved [2989166/2989166]
+
+echo "66ec90be036747602f2b48f98312361a9180c97c68a690a5f376fa0f67d0af7c  /home/user/dev/heads/packages/libgcrypt-1.8.3.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/libgcrypt-1.8.3.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/libgcrypt-1.8.3/"
+tar -xf "/home/user/dev/heads/packages/libgcrypt-1.8.3.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/libgcrypt-1.8.3/"
+if [ -r patches/libgcrypt-1.8.3.patch ]; then ( cd /home/user/dev/heads/build/libgcrypt-1.8.3/ ; patch -p1 ) < patches/libgcrypt-1.8.3.patch || exit 1 ; fi
+patching file configure
+if [ -d patches/libgcrypt-1.8.3 ] && [ -r patches/libgcrypt-1.8.3 ] ; then for patch in patches/libgcrypt-1.8.3/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/libgcrypt-1.8.3/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:27:48-05:00 CONFIG libgcrypt
+2020-01-21 22:27:56-05:00 MAKE libgcrypt
+2020-01-21 22:28:25-05:00 DONE libgcrypt
+2020-01-21 22:28:25-05:00 WGET https://gnupg.org/ftp/gcrypt/libksba/libksba-1.3.5.tar.bz2
+--2020-01-21 22:28:25--  https://gnupg.org/ftp/gcrypt/libksba/libksba-1.3.5.tar.bz2
+Resolving gnupg.org (gnupg.org)... 217.69.76.60, 2001:aa8:fff1:2100::60
+Connecting to gnupg.org (gnupg.org)|217.69.76.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 620649 (606K) [text/plain]
+Saving to: '/home/user/dev/heads/packages/libksba-1.3.5.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>] 606.10K   953KB/s    in 0.6s    
+
+2020-01-21 22:28:26 (953 KB/s) - '/home/user/dev/heads/packages/libksba-1.3.5.tar.bz2.tmp' saved [620649/620649]
+
+echo "41444fd7a6ff73a79ad9728f985e71c9ba8cd3e5e53358e70d5f066d35c1a340  /home/user/dev/heads/packages/libksba-1.3.5.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/libksba-1.3.5.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/libksba-1.3.5/"
+tar -xf "/home/user/dev/heads/packages/libksba-1.3.5.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/libksba-1.3.5/"
+if [ -r patches/libksba-1.3.5.patch ]; then ( cd /home/user/dev/heads/build/libksba-1.3.5/ ; patch -p1 ) < patches/libksba-1.3.5.patch || exit 1 ; fi
+patching file configure
+patching file src/asn1-gentables.c
+if [ -d patches/libksba-1.3.5 ] && [ -r patches/libksba-1.3.5 ] ; then for patch in patches/libksba-1.3.5/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/libksba-1.3.5/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:28:26-05:00 CONFIG libksba
+2020-01-21 22:28:29-05:00 MAKE libksba
+2020-01-21 22:28:36-05:00 DONE libksba
+2020-01-21 22:28:36-05:00 WGET https://gnupg.org/ftp/gcrypt/libassuan/libassuan-2.5.1.tar.bz2
+--2020-01-21 22:28:36--  https://gnupg.org/ftp/gcrypt/libassuan/libassuan-2.5.1.tar.bz2
+Resolving gnupg.org (gnupg.org)... 217.69.76.60, 2001:aa8:fff1:2100::60
+Connecting to gnupg.org (gnupg.org)|217.69.76.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 564857 (552K) [text/plain]
+Saving to: '/home/user/dev/heads/packages/libassuan-2.5.1.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>] 551.62K   864KB/s    in 0.6s    
+
+2020-01-21 22:28:37 (864 KB/s) - '/home/user/dev/heads/packages/libassuan-2.5.1.tar.bz2.tmp' saved [564857/564857]
+
+echo "47f96c37b4f2aac289f0bc1bacfa8bd8b4b209a488d3d15e2229cb6cc9b26449  /home/user/dev/heads/packages/libassuan-2.5.1.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/libassuan-2.5.1.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/libassuan-2.5.1/"
+tar -xf "/home/user/dev/heads/packages/libassuan-2.5.1.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/libassuan-2.5.1/"
+if [ -r patches/libassuan-2.5.1.patch ]; then ( cd /home/user/dev/heads/build/libassuan-2.5.1/ ; patch -p1 ) < patches/libassuan-2.5.1.patch || exit 1 ; fi
+patching file configure
+if [ -d patches/libassuan-2.5.1 ] && [ -r patches/libassuan-2.5.1 ] ; then for patch in patches/libassuan-2.5.1/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/libassuan-2.5.1/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:28:37-05:00 CONFIG libassuan
+2020-01-21 22:28:41-05:00 MAKE libassuan
+2020-01-21 22:28:44-05:00 DONE libassuan
+2020-01-21 22:28:44-05:00 WGET https://gnupg.org/ftp/gcrypt/npth/npth-1.6.tar.bz2
+--2020-01-21 22:28:44--  https://gnupg.org/ftp/gcrypt/npth/npth-1.6.tar.bz2
+Resolving gnupg.org (gnupg.org)... 217.69.76.60, 2001:aa8:fff1:2100::60
+Connecting to gnupg.org (gnupg.org)|217.69.76.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 300486 (293K) [text/plain]
+Saving to: '/home/user/dev/heads/packages/npth-1.6.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/n 100%[======================================================>] 293.44K   570KB/s    in 0.5s    
+
+2020-01-21 22:28:45 (570 KB/s) - '/home/user/dev/heads/packages/npth-1.6.tar.bz2.tmp' saved [300486/300486]
+
+echo "1393abd9adcf0762d34798dc34fdcf4d0d22a8410721e76f1e3afcd1daa4e2d1  /home/user/dev/heads/packages/npth-1.6.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/npth-1.6.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/npth-1.6/"
+tar -xf "/home/user/dev/heads/packages/npth-1.6.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/npth-1.6/"
+if [ -r patches/npth-1.6.patch ]; then ( cd /home/user/dev/heads/build/npth-1.6/ ; patch -p1 ) < patches/npth-1.6.patch || exit 1 ; fi
+if [ -d patches/npth-1.6 ] && [ -r patches/npth-1.6 ] ; then for patch in patches/npth-1.6/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/npth-1.6/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:28:45-05:00 CONFIG npth
+2020-01-21 22:28:48-05:00 MAKE npth
+2020-01-21 22:28:49-05:00 DONE npth
+2020-01-21 22:28:49-05:00 WGET https://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.21/libusb-1.0.21.tar.bz2
+--2020-01-21 22:28:49--  https://downloads.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.21/libusb-1.0.21.tar.bz2
+Resolving downloads.sourceforge.net (downloads.sourceforge.net)... 216.105.38.13
+Connecting to downloads.sourceforge.net (downloads.sourceforge.net)|216.105.38.13|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://versaweb.dl.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.21/libusb-1.0.21.tar.bz2 [following]
+--2020-01-21 22:28:49--  https://versaweb.dl.sourceforge.net/project/libusb/libusb-1.0/libusb-1.0.21/libusb-1.0.21.tar.bz2
+Resolving versaweb.dl.sourceforge.net (versaweb.dl.sourceforge.net)... 162.251.232.173
+Connecting to versaweb.dl.sourceforge.net (versaweb.dl.sourceforge.net)|162.251.232.173|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 607417 (593K) [application/octet-stream]
+Saving to: '/home/user/dev/heads/packages/libusb-1.0.21.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>] 593.18K   248KB/s    in 2.4s    
+
+2020-01-21 22:28:52 (248 KB/s) - '/home/user/dev/heads/packages/libusb-1.0.21.tar.bz2.tmp' saved [607417/607417]
+
+echo "7dce9cce9a81194b7065ee912bcd55eeffebab694ea403ffb91b67db66b1824b  /home/user/dev/heads/packages/libusb-1.0.21.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/libusb-1.0.21.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/libusb-1.0.21/"
+tar -xf "/home/user/dev/heads/packages/libusb-1.0.21.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/libusb-1.0.21/"
+if [ -r patches/libusb-1.0.21.patch ]; then ( cd /home/user/dev/heads/build/libusb-1.0.21/ ; patch -p1 ) < patches/libusb-1.0.21.patch || exit 1 ; fi
+if [ -d patches/libusb-1.0.21 ] && [ -r patches/libusb-1.0.21 ] ; then for patch in patches/libusb-1.0.21/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/libusb-1.0.21/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:28:52-05:00 CONFIG libusb
+2020-01-21 22:28:57-05:00 MAKE libusb
+2020-01-21 22:29:00-05:00 DONE libusb
+2020-01-21 22:29:00-05:00 WGET https://downloads.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-0.1.5/libusb-compat-0.1.5.tar.bz2
+--2020-01-21 22:29:00--  https://downloads.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-0.1.5/libusb-compat-0.1.5.tar.bz2
+Resolving downloads.sourceforge.net (downloads.sourceforge.net)... 216.105.38.13
+Connecting to downloads.sourceforge.net (downloads.sourceforge.net)|216.105.38.13|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://gigenet.dl.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-0.1.5/libusb-compat-0.1.5.tar.bz2 [following]
+--2020-01-21 22:29:01--  https://gigenet.dl.sourceforge.net/project/libusb/libusb-compat-0.1/libusb-compat-0.1.5/libusb-compat-0.1.5.tar.bz2
+Resolving gigenet.dl.sourceforge.net (gigenet.dl.sourceforge.net)... 69.65.16.142
+Connecting to gigenet.dl.sourceforge.net (gigenet.dl.sourceforge.net)|69.65.16.142|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 276769 (270K) [application/octet-stream]
+Saving to: '/home/user/dev/heads/packages/libusb-compat-0.1.5.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>] 270.28K   979KB/s    in 0.3s    
+
+2020-01-21 22:29:01 (979 KB/s) - '/home/user/dev/heads/packages/libusb-compat-0.1.5.tar.bz2.tmp' saved [276769/276769]
+
+echo "404ef4b6b324be79ac1bfb3d839eac860fbc929e6acb1ef88793a6ea328bc55a  /home/user/dev/heads/packages/libusb-compat-0.1.5.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/libusb-compat-0.1.5.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/libusb-compat-0.1.5/"
+tar -xf "/home/user/dev/heads/packages/libusb-compat-0.1.5.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/libusb-compat-0.1.5/"
+if [ -r patches/libusb-compat-0.1.5.patch ]; then ( cd /home/user/dev/heads/build/libusb-compat-0.1.5/ ; patch -p1 ) < patches/libusb-compat-0.1.5.patch || exit 1 ; fi
+if [ -d patches/libusb-compat-0.1.5 ] && [ -r patches/libusb-compat-0.1.5 ] ; then for patch in patches/libusb-compat-0.1.5/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/libusb-compat-0.1.5/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:29:01-05:00 CONFIG libusb-compat
+2020-01-21 22:29:04-05:00 MAKE libusb-compat
+2020-01-21 22:29:04-05:00 DONE libusb-compat
+2020-01-21 22:29:04-05:00 WGET https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.10.tar.bz2
+--2020-01-21 22:29:04--  https://www.gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.10.tar.bz2
+Resolving www.gnupg.org (www.gnupg.org)... 217.69.76.60, 2001:aa8:fff1:2100::60
+Connecting to www.gnupg.org (www.gnupg.org)|217.69.76.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6659484 (6.4M) [text/plain]
+Saving to: '/home/user/dev/heads/packages/gnupg-2.2.10.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/g 100%[======================================================>]   6.35M  4.97MB/s    in 1.3s    
+
+2020-01-21 22:29:06 (4.97 MB/s) - '/home/user/dev/heads/packages/gnupg-2.2.10.tar.bz2.tmp' saved [6659484/6659484]
+
+echo "799dd37a86a1448732e339bd20440f4f5ee6e69755f6fd7a73ee8af30840c915  /home/user/dev/heads/packages/gnupg-2.2.10.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/gnupg-2.2.10.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/gnupg-2.2.10/"
+tar -xf "/home/user/dev/heads/packages/gnupg-2.2.10.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/gnupg-2.2.10/"
+if [ -r patches/gpg2-2.2.10.patch ]; then ( cd /home/user/dev/heads/build/gnupg-2.2.10/ ; patch -p1 ) < patches/gpg2-2.2.10.patch || exit 1 ; fi
+patching file configure
+patching file common/ttyio.c
+if [ -d patches/gpg2-2.2.10 ] && [ -r patches/gpg2-2.2.10 ] ; then for patch in patches/gpg2-2.2.10/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/gnupg-2.2.10/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:29:07-05:00 CONFIG gpg2
+2020-01-21 22:29:16-05:00 MAKE gpg2
+2020-01-21 22:30:10-05:00 DONE gpg2
+2020-01-21 22:30:10-05:00 INSTALL-BIN build/gnupg-2.2.10/g10/gpg
+2020-01-21 22:30:10-05:00 INSTALL-BIN build/gnupg-2.2.10/agent/gpg-agent
+2020-01-21 22:30:10-05:00 INSTALL-BIN build/gnupg-2.2.10/scd/scdaemon
+2020-01-21 22:30:10-05:00 WGET https://www.gnupg.org/ftp/gcrypt/pinentry/pinentry-1.1.0.tar.bz2
+--2020-01-21 22:30:10--  https://www.gnupg.org/ftp/gcrypt/pinentry/pinentry-1.1.0.tar.bz2
+Resolving www.gnupg.org (www.gnupg.org)... 217.69.76.60, 2001:aa8:fff1:2100::60
+Connecting to www.gnupg.org (www.gnupg.org)|217.69.76.60|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 467702 (457K) [text/plain]
+Saving to: '/home/user/dev/heads/packages/pinentry-1.1.0.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/p 100%[======================================================>] 456.74K   727KB/s    in 0.6s    
+
+2020-01-21 22:30:11 (727 KB/s) - '/home/user/dev/heads/packages/pinentry-1.1.0.tar.bz2.tmp' saved [467702/467702]
+
+echo "68076686fa724a290ea49cdf0d1c0c1500907d1b759a3bcbfbec0293e8f56570  /home/user/dev/heads/packages/pinentry-1.1.0.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/pinentry-1.1.0.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/pinentry-1.1.0/"
+tar -xf "/home/user/dev/heads/packages/pinentry-1.1.0.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/pinentry-1.1.0/"
+if [ -r patches/pinentry-1.1.0.patch ]; then ( cd /home/user/dev/heads/build/pinentry-1.1.0/ ; patch -p1 ) < patches/pinentry-1.1.0.patch || exit 1 ; fi
+if [ -d patches/pinentry-1.1.0 ] && [ -r patches/pinentry-1.1.0 ] ; then for patch in patches/pinentry-1.1.0/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/pinentry-1.1.0/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:30:11-05:00 CONFIG pinentry
+2020-01-21 22:30:14-05:00 MAKE pinentry
+2020-01-21 22:30:15-05:00 DONE pinentry
+2020-01-21 22:30:15-05:00 INSTALL-BIN build/pinentry-1.1.0/tty/pinentry-tty
+2020-01-21 22:30:15-05:00 INSTALL-BIN build/lvm2.2.02.168/tools/dmsetup
+2020-01-21 22:30:15-05:00 INSTALL-BIN build/lvm2.2.02.168/tools/lvm
+2020-01-21 22:30:15-05:00 WGET https://matt.ucc.asn.au/dropbear/releases/dropbear-2016.74.tar.bz2
+--2020-01-21 22:30:15--  https://matt.ucc.asn.au/dropbear/releases/dropbear-2016.74.tar.bz2
+Resolving matt.ucc.asn.au (matt.ucc.asn.au)... 130.95.13.18, 2405:3c00:5200:100::18
+Connecting to matt.ucc.asn.au (matt.ucc.asn.au)|130.95.13.18|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1622234 (1.5M) [application/x-bzip2]
+Saving to: '/home/user/dev/heads/packages/dropbear-2016.74.tar.bz2.tmp'
+
+/home/user/dev/heads/packages/d 100%[======================================================>]   1.55M   900KB/s    in 1.8s    
+
+2020-01-21 22:30:18 (900 KB/s) - '/home/user/dev/heads/packages/dropbear-2016.74.tar.bz2.tmp' saved [1622234/1622234]
+
+echo "2720ea54ed009af812701bcc290a2a601d5c107d12993e5d92c0f5f81f718891  /home/user/dev/heads/packages/dropbear-2016.74.tar.bz2" | sha256sum --check -
+/home/user/dev/heads/packages/dropbear-2016.74.tar.bz2: OK
+mkdir -p "/home/user/dev/heads/build/dropbear-2016.74/"
+tar -xf "/home/user/dev/heads/packages/dropbear-2016.74.tar.bz2" --strip 1 -C "/home/user/dev/heads/build/dropbear-2016.74/"
+if [ -r patches/dropbear-2016.74.patch ]; then ( cd /home/user/dev/heads/build/dropbear-2016.74/ ; patch -p1 ) < patches/dropbear-2016.74.patch || exit 1 ; fi
+patching file svr-chansession.c
+if [ -d patches/dropbear-2016.74 ] && [ -r patches/dropbear-2016.74 ] ; then for patch in patches/dropbear-2016.74/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/dropbear-2016.74/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:30:20-05:00 CONFIG dropbear
+2020-01-21 22:30:24-05:00 MAKE dropbear
+2020-01-21 22:30:37-05:00 DONE dropbear
+2020-01-21 22:30:37-05:00 INSTALL-BIN build/dropbear-2016.74/ssh
+2020-01-21 22:30:37-05:00 INSTALL-BIN build/dropbear-2016.74/scp
+2020-01-21 22:30:37-05:00 INSTALL-BIN build/dropbear-2016.74/dropbear
+git clone https://github.com/osresearch/flashtools "/home/user/dev/heads/build/flashtools-0.0.1"
+Cloning into '/home/user/dev/heads/build/flashtools-0.0.1'...
+remote: Enumerating objects: 117, done.
+remote: Total 117 (delta 0), reused 0 (delta 0), pack-reused 117
+Receiving objects: 100% (117/117), 58.64 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (68/68), done.
+cd /home/user/dev/heads/build/flashtools-0.0.1 && git submodule update --init --checkout
+if [ -r patches/flashtools.patch ]; then ( cd /home/user/dev/heads/build/flashtools-0.0.1 ; patch -p1 ) < patches/flashtools.patch || exit 1 ; fi
+if [ -d patches/flashtools ] && [ -r patches/flashtools ] ; then for patch in patches/flashtools/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/flashtools-0.0.1 ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:30:39-05:00 CONFIG flashtools
+2020-01-21 22:30:39-05:00 MAKE flashtools
+2020-01-21 22:30:40-05:00 DONE flashtools
+2020-01-21 22:30:40-05:00 INSTALL-BIN build/flashtools-0.0.1/flashtool
+2020-01-21 22:30:40-05:00 INSTALL-BIN build/flashtools-0.0.1/peek
+2020-01-21 22:30:40-05:00 INSTALL-BIN build/flashtools-0.0.1/poke
+2020-01-21 22:30:40-05:00 INSTALL-BIN build/flashtools-0.0.1/cbfs
+2020-01-21 22:30:40-05:00 INSTALL-BIN build/flashtools-0.0.1/uefi
+2020-01-21 22:30:40-05:00 WGET https://download.sourceforge.net/libpng/libpng-1.6.34.tar.gz
+--2020-01-21 22:30:40--  https://download.sourceforge.net/libpng/libpng-1.6.34.tar.gz
+Resolving download.sourceforge.net (download.sourceforge.net)... 216.105.38.13
+Connecting to download.sourceforge.net (download.sourceforge.net)|216.105.38.13|:443... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://downloads.sourceforge.net/project/libpng/libpng16/1.6.34/libpng-1.6.34.tar.gz [following]
+--2020-01-21 22:30:40--  https://downloads.sourceforge.net/project/libpng/libpng16/1.6.34/libpng-1.6.34.tar.gz
+Resolving downloads.sourceforge.net (downloads.sourceforge.net)... 216.105.38.13
+Connecting to downloads.sourceforge.net (downloads.sourceforge.net)|216.105.38.13|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://managedway.dl.sourceforge.net/project/libpng/libpng16/1.6.34/libpng-1.6.34.tar.gz [following]
+--2020-01-21 22:30:40--  https://managedway.dl.sourceforge.net/project/libpng/libpng16/1.6.34/libpng-1.6.34.tar.gz
+Resolving managedway.dl.sourceforge.net (managedway.dl.sourceforge.net)... 208.79.213.6
+Connecting to managedway.dl.sourceforge.net (managedway.dl.sourceforge.net)|208.79.213.6|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1505138 (1.4M) [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/libpng-1.6.34.tar.gz.tmp'
+
+/home/user/dev/heads/packages/l 100%[======================================================>]   1.43M  5.33MB/s    in 0.3s    
+
+2020-01-21 22:30:41 (5.33 MB/s) - '/home/user/dev/heads/packages/libpng-1.6.34.tar.gz.tmp' saved [1505138/1505138]
+
+echo "574623a4901a9969080ab4a2df9437026c8a87150dfd5c235e28c94b212964a7  /home/user/dev/heads/packages/libpng-1.6.34.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/libpng-1.6.34.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/libpng-1.6.34/"
+tar -xf "/home/user/dev/heads/packages/libpng-1.6.34.tar.gz" --strip 1 -C "/home/user/dev/heads/build/libpng-1.6.34/"
+if [ -r patches/libpng-1.6.34.patch ]; then ( cd /home/user/dev/heads/build/libpng-1.6.34/ ; patch -p1 ) < patches/libpng-1.6.34.patch || exit 1 ; fi
+if [ -d patches/libpng-1.6.34 ] && [ -r patches/libpng-1.6.34 ] ; then for patch in patches/libpng-1.6.34/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/libpng-1.6.34/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:30:41-05:00 CONFIG libpng
+2020-01-21 22:30:44-05:00 MAKE libpng
+2020-01-21 22:31:00-05:00 DONE libpng
+2020-01-21 22:31:00-05:00 WGET https://www.cairographics.org/releases/pixman-0.34.0.tar.gz
+--2020-01-21 22:31:00--  https://www.cairographics.org/releases/pixman-0.34.0.tar.gz
+Resolving www.cairographics.org (www.cairographics.org)... 131.252.210.176
+Connecting to www.cairographics.org (www.cairographics.org)|131.252.210.176|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 878784 (858K) [application/x-gzip]
+Saving to: '/home/user/dev/heads/packages/pixman-0.34.0.tar.gz.tmp'
+
+/home/user/dev/heads/packages/p 100%[======================================================>] 858.19K  1.74MB/s    in 0.5s    
+
+2020-01-21 22:31:02 (1.74 MB/s) - '/home/user/dev/heads/packages/pixman-0.34.0.tar.gz.tmp' saved [878784/878784]
+
+echo "21b6b249b51c6800dc9553b65106e1e37d0e25df942c90531d4c3997aa20a88e  /home/user/dev/heads/packages/pixman-0.34.0.tar.gz" | sha256sum --check -
+/home/user/dev/heads/packages/pixman-0.34.0.tar.gz: OK
+mkdir -p "/home/user/dev/heads/build/pixman-0.34.0/"
+tar -xf "/home/user/dev/heads/packages/pixman-0.34.0.tar.gz" --strip 1 -C "/home/user/dev/heads/build/pixman-0.34.0/"
+if [ -r patches/pixman-0.34.0.patch ]; then ( cd /home/user/dev/heads/build/pixman-0.34.0/ ; patch -p1 ) < patches/pixman-0.34.0.patch || exit 1 ; fi
+if [ -d patches/pixman-0.34.0 ] && [ -r patches/pixman-0.34.0 ] ; then for patch in patches/pixman-0.34.0/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/pixman-0.34.0/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:31:02-05:00 CONFIG pixman
+2020-01-21 22:31:07-05:00 MAKE pixman
+2020-01-21 22:32:10-05:00 DONE pixman
+2020-01-21 22:32:10-05:00 WGET https://www.cairographics.org/releases/cairo-1.14.12.tar.xz
+--2020-01-21 22:32:10--  https://www.cairographics.org/releases/cairo-1.14.12.tar.xz
+Resolving www.cairographics.org (www.cairographics.org)... 131.252.210.176
+Connecting to www.cairographics.org (www.cairographics.org)|131.252.210.176|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 36251896 (35M) [application/x-xz]
+Saving to: '/home/user/dev/heads/packages/cairo-1.14.12.tar.xz.tmp'
+
+/home/user/dev/heads/packages/c 100%[======================================================>]  34.57M   537KB/s    in 83s     
+
+2020-01-21 22:33:33 (429 KB/s) - '/home/user/dev/heads/packages/cairo-1.14.12.tar.xz.tmp' saved [36251896/36251896]
+
+echo "8c90f00c500b2299c0a323dd9beead2a00353752b2092ead558139bd67f7bf16  /home/user/dev/heads/packages/cairo-1.14.12.tar.xz" | sha256sum --check -
+/home/user/dev/heads/packages/cairo-1.14.12.tar.xz: OK
+mkdir -p "/home/user/dev/heads/build/cairo-1.14.12/"
+tar -xf "/home/user/dev/heads/packages/cairo-1.14.12.tar.xz" --strip 1 -C "/home/user/dev/heads/build/cairo-1.14.12/"
+if [ -r patches/cairo-1.14.12.patch ]; then ( cd /home/user/dev/heads/build/cairo-1.14.12/ ; patch -p1 ) < patches/cairo-1.14.12.patch || exit 1 ; fi
+if [ -d patches/cairo-1.14.12 ] && [ -r patches/cairo-1.14.12 ] ; then for patch in patches/cairo-1.14.12/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/cairo-1.14.12/ ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:33:34-05:00 CONFIG cairo
+2020-01-21 22:33:42-05:00 MAKE cairo
+2020-01-21 22:34:58-05:00 DONE cairo
+git clone https://source.puri.sm/coreboot/fbwhiptail.git "/home/user/dev/heads/build/fbwhiptail"
+Cloning into '/home/user/dev/heads/build/fbwhiptail'...
+remote: Enumerating objects: 134, done.
+remote: Counting objects: 100% (134/134), done.
+remote: Compressing objects: 100% (53/53), done.
+remote: Total 134 (delta 78), reused 134 (delta 78)
+Receiving objects: 100% (134/134), 92.14 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (78/78), done.
+cd /home/user/dev/heads/build/fbwhiptail && git submodule update --init --checkout
+if [ -r patches/fbwhiptail.patch ]; then ( cd /home/user/dev/heads/build/fbwhiptail ; patch -p1 ) < patches/fbwhiptail.patch || exit 1 ; fi
+if [ -d patches/fbwhiptail ] && [ -r patches/fbwhiptail ] ; then for patch in patches/fbwhiptail/*.patch ; do echo "Applying patch file : $patch " ; ( cd /home/user/dev/heads/build/fbwhiptail ; patch -p1 ) < $patch || exit 1 ; done ; fi
+2020-01-21 22:35:01-05:00 CONFIG fbwhiptail
+2020-01-21 22:35:01-05:00 MAKE fbwhiptail
+2020-01-21 22:35:01-05:00 DONE fbwhiptail
+2020-01-21 22:35:01-05:00 INSTALL-BIN build/fbwhiptail/fbwhiptail
+2020-01-21 22:35:01-05:00 INSTALL-BIN build/fbwhiptail/whiptail
+2020-01-21 22:35:01-05:00 MAKE cbmem
+make[2]: Entering directory '/home/user/dev/heads/build/coreboot-4.8.1/util/cbmem'
+/home/user/dev/heads/crossgcc/bin/x86_64-linux-musl-gcc -fdebug-prefix-map=/home/user/dev/heads=heads -gno-record-gcc-switches -D__MUSL__ -I/home/user/dev/heads/install/include -L/home/user/dev/heads/install/lib  -O2 -Wall -Werror -I . -I ../../src/commonlib/include  -c -o cbmem.o cbmem.c
+/home/user/dev/heads/crossgcc/bin/x86_64-linux-musl-gcc -fdebug-prefix-map=/home/user/dev/heads=heads -gno-record-gcc-switches -D__MUSL__ -I/home/user/dev/heads/install/include -L/home/user/dev/heads/install/lib    cbmem.o   -o cbmem
+make[2]: Leaving directory '/home/user/dev/heads/build/coreboot-4.8.1/util/cbmem'
+2020-01-21 22:35:01-05:00 INSTALL-BIN build/coreboot-4.8.1/util/cbmem/cbmem
+2020-01-21 22:35:01-05:00 INSTALL-LIB crossgcc/x86_64-linux-musl/lib/libc.so
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/cairo-1.14.12/src/.libs/libcairo.so.2
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/libgcrypt-1.8.3/src/.libs/libgcrypt.so.20
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/popt-1.16/.libs/libpopt.so.0
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/cryptsetup-1.7.3/lib/.libs/libcryptsetup.so.4
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/mbedtls-2.4.2/library/libmbedcrypto.so.0
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/npth-1.6/src/.libs/libnpth.so.0
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/qrencode-3.4.4/.libs/libqrencode.so.3
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/pixman-0.34.0/pixman/.libs/libpixman-1.so.0
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/pciutils-3.5.4/lib/libpci.so.3.5.4
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/pciutils-3.5.4/../../install/lib/libpci.so.3
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/libksba-1.3.5/src/.libs/libksba.so.8
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/libassuan-2.5.1/src/.libs/libassuan.so.0
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/libusb-1.0.21/libusb/.libs/libusb-1.0.so.0
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/libpng-1.6.34/.libs/libpng16.so.16
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/tpmtotp-18b860fdcf5a55537c8395b891f2b2a5c24fc00a/libtpm/libtpm.so
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/libgpg-error-1.32/src/.libs/libgpg-error.so.0
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/libusb-compat-0.1.5/libusb/.libs/libusb-0.1.so.4
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/lvm2.2.02.168/libdm/libdevmapper.so.1.02
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/util-linux-2.29.2/.libs/libuuid.so.1
+2020-01-21 22:35:02-05:00 INSTALL-LIB build/zlib-1.2.11/libz.so.1
+2020-01-21 22:35:02-05:00 INSTALL boards/x230/x230.config
+2020-01-21 22:35:02-05:00 HASH b2252829e8eb3644fa322d2d6688623ca2e22362 dirty x230
+2020-01-21 22:35:02-05:00 CPIO      build/x230/tools.cpio
+7eeef4b094b899e6e1f27542e967c068121cefe757d896b616ed0933c208ac2d  /home/user/dev/heads/build/x230/tools.cpio
+2020-01-21 22:35:02-05:00 HASHES    build/x230/tools.cpio
+2020-01-21 22:35:02-05:00 CPIO      build/x230/heads.cpio
+725e0c2cdc98409cae33c5f92ecf7bbe406c4a3655fa4c31122b3f139d324b29  /home/user/dev/heads/build/x230/heads.cpio
+2020-01-21 22:35:02-05:00 HASHES    build/x230/heads.cpio
+2020-01-21 22:35:02-05:00 CPIO-XZ   build/x230/initrd.cpio.xz
+bb587b571c2ffb9daa83989141cdd42d8689daf6645de78afeb5ea43e43fddd0  build/x230/initrd.cpio.xz
+2020-01-21 22:35:08-05:00 MAKE coreboot
+tail /home/user/dev/heads/build/log/coreboot.log
+-----
+    HOSTCC     cbfstool/lz4frame.o
+    HOSTCC     cbfstool/xxhash.o
+    HOSTCC     cbfstool/lz4_wrapper.o
+    HOSTCC     cbfstool/lzma.o
+    HOSTCC     cbfstool/LzFind.o
+    HOSTCC     cbfstool/LzmaDec.o
+    HOSTCC     cbfstool/LzmaEnc.o
+    HOSTCC     cbfstool/cbfstool (link)
+Created CBFS (capacity = 7208920 bytes)
+    CBFS       fallback/romstage
+    CBFS       cpu_microcode_blob.bin
+    CBFS       fallback/ramstage
+    CBFS       cmos_layout.bin
+    CBFS       fallback/dsdt.aml
+    CBFS       fallback/payload
+    Compile IFDTOOL
+    HOSTCC     util/ifdfake/ifdfake
+    DD         Adding Intel Firmware Descriptor
+make[2]: *** [src/southbridge/intel/common/firmware/Makefile.inc:51: add_intel_firmware] Error 1
+make[2]: Leaving directory '/home/user/dev/heads/build/coreboot-4.8.1'
+make[1]: *** [Makefile:382: /home/user/dev/heads/build/coreboot-4.8.1/x230/.build] Error 1
+make[1]: Leaving directory '/home/user/dev/heads'
+Makefile:587: recipe for target 'all' failed
+make: *** [all] Error 2
+user@dev-coreboot-deb9:~/dev/heads$ 
+
